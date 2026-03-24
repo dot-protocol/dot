@@ -1,0 +1,5 @@
+observe measure: temperature = 22.5
+observe state: reactor_status = "online"
+observe event: "system started"
+observe claim: "sensor calibrated"
+observe bond: sensor_7

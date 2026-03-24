@@ -53,6 +53,25 @@ importers:
         specifier: ^3.1.0
         version: 3.2.4(@types/node@25.5.0)
 
+  packages/cli:
+    dependencies:
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/lang':
+        specifier: workspace:*
+        version: link:../lang
+      '@dot-protocol/script':
+        specifier: workspace:*
+        version: link:../script
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
   packages/core:
     dependencies:
       blake3:
@@ -120,6 +139,28 @@ importers:
         specifier: ^3.1.0
         version: 3.2.4(@types/node@25.5.0)
 
+  packages/mcp:
+    dependencies:
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/lang':
+        specifier: workspace:*
+        version: link:../lang
+      '@dot-protocol/script':
+        specifier: workspace:*
+        version: link:../script
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
   packages/mesh:
     dependencies:
       '@dot-protocol/chain':
@@ -163,6 +204,28 @@ importers:
       '@dot-protocol/core':
         specifier: workspace:*
         version: link:../core
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
+  packages/selfhost:
+    dependencies:
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/lang':
+        specifier: workspace:*
+        version: link:../lang
+      '@dot-protocol/script':
+        specifier: workspace:*
+        version: link:../script
     devDependencies:
       typescript:
         specifier: ^5.8.0

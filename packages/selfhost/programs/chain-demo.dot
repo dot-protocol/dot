@@ -1,0 +1,5 @@
+observe event: "first observation"
+observe event: "second observation"
+  .chain(previous: first)
+observe event: "third observation"
+  .chain(previous: second)

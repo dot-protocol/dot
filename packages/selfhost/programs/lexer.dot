@@ -1,0 +1,7 @@
+agent lexer {
+  every 1 seconds {
+    observe event: "tokenize" at source_code
+      .gate(ready)
+      .forge(action: emit_tokens)
+  }
+}

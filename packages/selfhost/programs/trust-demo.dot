@@ -1,0 +1,5 @@
+observe claim: "data is accurate"
+observe claim: "data is accurate"
+  .chain(previous: first_claim)
+observe claim: "data is accurate"
+  .chain(previous: second_claim)

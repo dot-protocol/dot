@@ -1,0 +1,3 @@
+observe measure: temperature at sensor_7 = 82.3
+  .gate(temperature > 80)
+  .pulse(alert: "overheating")

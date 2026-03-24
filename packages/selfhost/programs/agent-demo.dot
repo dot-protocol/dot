@@ -1,0 +1,7 @@
+agent health_monitor {
+  every 5 seconds {
+    observe measure: cpu_usage = 45.2
+      .gate(cpu_usage > 90)
+      .pulse(alert: "high CPU")
+  }
+}
