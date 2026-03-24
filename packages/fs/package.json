@@ -1,0 +1,27 @@
+{
+  "name": "@dot-protocol/fs",
+  "version": "1.0.0-alpha.0",
+  "description": "DOT-FS: STCV-aware filesystem layer for the DOT Protocol.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@dot-protocol/core": "workspace:*",
+    "blake3": "^2.1.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
+  },
+  "license": "MIT"
+}

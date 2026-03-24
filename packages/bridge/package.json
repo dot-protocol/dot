@@ -1,7 +1,6 @@
 {
-  "name": "@dot-protocol/core",
+  "name": "@dot-protocol/bridge",
   "version": "1.0.0-alpha.0",
-  "description": "The DOT STCV kernel. observe/sign/verify/chain/hash. FHE by default.",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -14,18 +13,16 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "bench": "vitest bench"
+    "test:watch": "vitest"
   },
   "dependencies": {
-    "libsodium-wrappers-sumo": "^0.7.15",
-    "blake3": "^2.1.7",
-    "node-tfhe": "^0.8.0"
+    "@dot-protocol/core": "workspace:*",
+    "@noble/ed25519": "^2.0.0",
+    "@noble/hashes": "^1.4.0"
   },
   "devDependencies": {
     "typescript": "^5.8.0",
-    "vitest": "^3.1.0",
-    "@noble/ed25519": "^2.0.0"
+    "vitest": "^3.1.0"
   },
   "files": ["dist"],
   "license": "MIT"
