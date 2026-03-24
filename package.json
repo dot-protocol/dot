@@ -1,0 +1,16 @@
+{
+  "name": "dot-protocol-r854",
+  "private": true,
+  "version": "0.0.0",
+  "description": "DOT Protocol R854 — The Higgs Boson DNA Programming Language",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "pnpm -r build",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
+  }
+}
