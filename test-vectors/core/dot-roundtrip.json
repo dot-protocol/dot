@@ -1,0 +1,175 @@
+{
+  "version": "1.0.0-alpha.0",
+  "protocol": "DOT R854",
+  "description": "Cross-language TLV encoding test vectors. These vectors verify that TypeScript and Rust produce identical encoded bytes for the same inputs.",
+  "encoding": "TLV — Tag (1 byte BE) | Length (2 bytes BE) | Value",
+  "tags": {
+    "0x01": "payload",
+    "0x02": "payload_mode",
+    "0x03": "dot_type",
+    "0x10": "sign.observer",
+    "0x11": "sign.sig",
+    "0x20": "time.ts",
+    "0x21": "time.seq",
+    "0x30": "chain.prev",
+    "0x31": "chain.depth",
+    "0x40": "verify.valid",
+    "0x41": "verify.reason",
+    "0x42": "verify.checked",
+    "0x50": "fhe.scheme",
+    "0x51": "fhe.ciphertext",
+    "0x60": "meta"
+  },
+  "payload_mode_values": {
+    "0": "Fhe",
+    "1": "Plain",
+    "2": "None"
+  },
+  "dot_type_values": {
+    "0": "Measure",
+    "1": "State",
+    "2": "Event",
+    "3": "Claim",
+    "4": "Bond"
+  },
+  "vectors": [
+    {
+      "id": "TV-R854-001",
+      "description": "empty DOT — all fields None",
+      "input": {},
+      "encoded_hex": "",
+      "level": 0,
+      "trust": 0.0,
+      "notes": "Empty DOT encodes to empty bytes per R854 spec."
+    },
+    {
+      "id": "TV-R854-002",
+      "description": "payload_mode None only",
+      "input": {
+        "payload_mode": "None"
+      },
+      "encoded_hex": "020002",
+      "level": 0,
+      "trust": 0.0,
+      "notes": "Tag=0x02, Length=0x0002, Value=0x02 (None=2)"
+    },
+    {
+      "id": "TV-R854-003",
+      "description": "plain text payload",
+      "input": {
+        "payload": "hello",
+        "payload_mode": "Plain"
+      },
+      "encoded_hex": "010005 68656c6c6f 020001 01",
+      "level": 1,
+      "trust": 0.1667,
+      "notes": "payload=hello(5B), payload_mode=Plain(1). Level=1 (payload present)."
+    },
+    {
+      "id": "TV-R854-004",
+      "description": "dot_type Event",
+      "input": {
+        "dot_type": "Event"
+      },
+      "encoded_hex": "030001 02",
+      "level": 0,
+      "trust": 0.0,
+      "notes": "Tag=0x03, Length=1, Value=0x02 (Event=2)"
+    },
+    {
+      "id": "TV-R854-005",
+      "description": "timestamp only",
+      "input": {
+        "time": {
+          "ts": 1742827200000,
+          "seq": null
+        }
+      },
+      "encoded_hex": "200008 000001953c2a2400",
+      "level": 1,
+      "trust": 0.1667,
+      "notes": "time.ts=1742827200000 (2026-03-24 UTC). 8 bytes big-endian."
+    },
+    {
+      "id": "TV-R854-006",
+      "description": "chain data — depth 1",
+      "input": {
+        "chain": {
+          "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+          "depth": 1
+        }
+      },
+      "encoded_hex": "300020 0000000000000000000000000000000000000000000000000000000000000000 310008 0000000000000001",
+      "level": 1,
+      "trust": 0.1667,
+      "notes": "chain.prev=32 zeros, chain.depth=1 (8 bytes BE)"
+    },
+    {
+      "id": "TV-R854-007",
+      "description": "fhe stub data",
+      "input": {
+        "fhe": {
+          "scheme": "tfhe-rs-stub",
+          "ciphertext": "deadbeef"
+        }
+      },
+      "encoded_hex": "50000c 746668652d72732d73747562 510004 deadbeef",
+      "level": 1,
+      "trust": 0.2667,
+      "notes": "fhe.scheme=tfhe-rs-stub(12B), fhe.ciphertext=4B. Level=1 (fhe present) + 0.1 bonus."
+    },
+    {
+      "id": "TV-R854-008",
+      "description": "verify valid=true with checked fields",
+      "input": {
+        "verify": {
+          "valid": true,
+          "reason": null,
+          "checked": ["sign.observer", "sign.sig"]
+        }
+      },
+      "encoded_hex": "400001 01 42001b [\"sign.observer\",\"sign.sig\"]",
+      "level": 0,
+      "trust": 0.0,
+      "notes": "verify.valid=1(true), verify.checked=JSON array. No sign field so verify bonus not applied."
+    },
+    {
+      "id": "TV-R854-009",
+      "description": "meta JSON object",
+      "input": {
+        "meta": {
+          "source": "sensor-1",
+          "unit": "celsius"
+        }
+      },
+      "encoded_hex": "6000.. {json}",
+      "level": 0,
+      "trust": 0.1,
+      "notes": "meta entries as JSON object. 0.1 bonus for having meta. Exact length depends on JSON serialization order."
+    },
+    {
+      "id": "TV-R854-010",
+      "description": "all present fields (no sign — unsigned DOT)",
+      "input": {
+        "payload": "R854",
+        "payload_mode": "Fhe",
+        "dot_type": "Measure",
+        "time": { "ts": 1742827200000, "seq": 1 },
+        "fhe": { "scheme": "tfhe-rs-stub", "ciphertext": "f8f9fafb" },
+        "meta": { "version": "R854" }
+      },
+      "encoded_hex": "...",
+      "level": 4,
+      "trust": 0.767,
+      "notes": "Level: payload(+1) + fhe(+1) + time(+1) + payload_mode(but no sign=0) = 3. Trust: 3/6=0.5 + fhe(+0.1) + meta(+0.1) + seq(+0.1) = 0.8. Exact bytes depend on field values."
+    }
+  ],
+  "invariants": [
+    "Empty DOT MUST encode to exactly 0 bytes",
+    "from_bytes(to_bytes(dot)) MUST produce an equal DOT for any valid DOT",
+    "TLV length field is always big-endian uint16",
+    "All multi-byte integers (ts, depth) are big-endian",
+    "Unknown tags MUST produce DecodeError::UnknownTag",
+    "Truncated input MUST produce DecodeError::TruncatedInput"
+  ]
+}

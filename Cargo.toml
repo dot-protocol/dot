@@ -1,0 +1,3 @@
+[workspace]
+members = ["rust/dot-core"]
+resolver = "2"
