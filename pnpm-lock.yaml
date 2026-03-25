@@ -81,6 +81,28 @@ importers:
         specifier: ^3.1.0
         version: 3.2.4(@types/node@25.5.0)
 
+  packages/chat:
+    dependencies:
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/mesh':
+        specifier: workspace:*
+        version: link:../mesh
+      '@dot-protocol/room':
+        specifier: workspace:*
+        version: link:../room
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
   packages/cli:
     dependencies:
       '@dot-protocol/core':
@@ -335,6 +357,28 @@ importers:
       '@dot-protocol/script':
         specifier: workspace:*
         version: link:../script
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
+  packages/signal:
+    dependencies:
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/mesh':
+        specifier: workspace:*
+        version: link:../mesh
+      '@dot-protocol/seal':
+        specifier: workspace:*
+        version: link:../seal
     devDependencies:
       typescript:
         specifier: ^5.8.0
