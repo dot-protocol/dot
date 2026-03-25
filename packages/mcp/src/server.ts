@@ -4,12 +4,16 @@
  * createDotMCPServer() returns a fully-configured MCPServer with all
  * 11 DOT tools registered. The runtime is lazily booted on first tool call.
  *
- * Usage:
+ * Usage (internal / test):
  *   const server = createDotMCPServer();
- *   await server.start();
+ *   await server.callTool('dot_boot', {});
  *
- * When @modelcontextprotocol/sdk is available, replace MCPServer with the
- * real SDK Server class and connect a StdioServerTransport in start().
+ * Usage (stdio / production):
+ *   import { startStdioServer } from './stdio-server.js';
+ *   await startStdioServer();
+ *
+ * @modelcontextprotocol/sdk v1.28.0 is installed. The real stdio transport
+ * is wired in stdio-server.ts using the SDK's Server + StdioServerTransport.
  */
 
 import { MCPServer } from './mcp-interface.js';

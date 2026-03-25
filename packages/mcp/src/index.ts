@@ -5,20 +5,30 @@
  *   dot_boot, dot_observe, dot_verify, dot_chain, dot_sign,
  *   dot_trust, dot_compile, dot_explain, dot_health, dot_execute, dot_bridge
  *
- * NOTE: @modelcontextprotocol/sdk is not installed. A minimal mock interface
- * is provided in mcp-interface.ts. To use the real SDK, replace MCPServer
- * with the real Server class and connect a StdioServerTransport.
+ * @modelcontextprotocol/sdk v1.28.0 is installed.
  *
- * Usage:
+ * Two server implementations are available:
+ *   - createDotMCPServer() — internal abstraction (MCPServer), used for tests
+ *   - createSdkServer()    — real SDK Server with stdio transport support
+ *   - startStdioServer()   — connect SDK server to stdio (production use)
+ *
+ * Usage (production / stdio):
+ *   import { startStdioServer } from '@dot-protocol/mcp';
+ *   await startStdioServer();
+ *
+ * Usage (testing / internal):
  *   import { createDotMCPServer } from '@dot-protocol/mcp';
  *   const server = createDotMCPServer();
- *   await server.start();
+ *   await server.callTool('dot_boot', {});
  */
 
-// Server factory
+// Real SDK server (stdio transport)
+export { createSdkServer, startStdioServer } from './stdio-server.js';
+
+// Internal server factory (MCPServer abstraction — used by tests)
 export { createDotMCPServer } from './server.js';
 
-// MCP interface (mock — replace with real SDK types when available)
+// MCP interface (internal abstraction layer)
 export { MCPServer } from './mcp-interface.js';
 export type {
   MCPToolDefinition,

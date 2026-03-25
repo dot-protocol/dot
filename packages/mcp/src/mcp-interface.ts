@@ -1,10 +1,13 @@
 /**
  * mcp-interface.ts — Minimal MCP (Model Context Protocol) interface.
  *
- * NOTE: @modelcontextprotocol/sdk is not installed. This file defines the
- * minimal interface shapes needed for the DOT MCP server. When the real SDK
- * is available, replace the import in server.ts with:
- *   import { Server, StdioServerTransport } from '@modelcontextprotocol/sdk/server/index.js';
+ * @modelcontextprotocol/sdk v1.28.0 is now installed. This file remains as the
+ * internal abstraction layer used by all handler tests. It intentionally mirrors
+ * the SDK's tool-call semantics so tests run without a live transport.
+ *
+ * For stdio wire-up, see stdio-server.ts which uses the real SDK:
+ *   import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+ *   import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
  *
  * The tool handler signatures match MCP SDK v1.x patterns.
  */

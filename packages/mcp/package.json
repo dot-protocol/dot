@@ -15,10 +15,11 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@dot-protocol/core": "workspace:*",
     "@dot-protocol/chain": "workspace:*",
+    "@dot-protocol/core": "workspace:*",
     "@dot-protocol/lang": "workspace:*",
-    "@dot-protocol/script": "workspace:*"
+    "@dot-protocol/script": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.28.0"
   },
   "devDependencies": {
     "typescript": "^5.8.0",
