@@ -122,6 +122,34 @@ importers:
         specifier: ^3.1.0
         version: 3.2.4(@types/node@25.5.0)
 
+  packages/first-room:
+    dependencies:
+      '@dot-protocol/browser':
+        specifier: workspace:*
+        version: link:../browser
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/script':
+        specifier: workspace:*
+        version: link:../script
+      '@dot-protocol/tree':
+        specifier: workspace:*
+        version: link:../tree
+      '@dot-protocol/viewer':
+        specifier: workspace:*
+        version: link:../viewer
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
   packages/fs:
     dependencies:
       '@dot-protocol/core':
@@ -207,6 +235,50 @@ importers:
       '@types/ws':
         specifier: ^8.18.1
         version: 8.18.1
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
+  packages/minds:
+    dependencies:
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
+  packages/room:
+    dependencies:
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/mesh':
+        specifier: workspace:*
+        version: link:../mesh
+      '@dot-protocol/script':
+        specifier: workspace:*
+        version: link:../script
+      '@dot-protocol/seal':
+        specifier: workspace:*
+        version: link:../seal
+      '@dot-protocol/sync':
+        specifier: workspace:*
+        version: link:../sync
+    devDependencies:
       typescript:
         specifier: ^5.8.0
         version: 5.9.3
