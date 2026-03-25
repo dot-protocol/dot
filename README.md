@@ -1,97 +1,62 @@
-# DOT Protocol
+# DOT
 
-The internet is built on documents. DOT is built on contacts.
+**The internet is built on documents. We're replacing it with contacts.**
 
-Every observation is signed, timestamped, chained, and verifiable. No server owns your data. The chain IS the room. The room lives wherever the chain lives.
+A DOT is a signed observation. Timestamped. Chained. Verifiable. Language-independent.
+No server. No account. No password. Just a keypair and something worth observing.
 
-```
-npm install @dot-protocol/core
-```
-
-```typescript
+```js
 import { observe, sign, chain, verify, createIdentity } from '@dot-protocol/core';
 
-const { publicKey, secretKey } = await createIdentity();
-
-const dot = await sign(
-  chain(observe('hello world', { type: 'claim' })),
-  secretKey
-);
-
-const result = await verify(dot);
-// { valid: true, checked: ['signature'] }
+const me = await createIdentity();
+const dot = await sign(chain(observe('hello world', { type: 'claim' })), me.secretKey);
+const proof = await verify(dot);
+// { valid: true }
 ```
 
-Five lines. A signed, chained, verifiable observation. That's DOT.
+Five lines. You just created a cryptographically signed, append-only observation that no one can forge, no server can delete, and any device can verify.
+
+That's DOT. That's the whole idea.
 
 ---
 
-## What DOT Replaces
+## Why
 
-| Old Internet | DOT |
-|-------------|-----|
-| URLs (documents) | DOTs (observations) |
-| Servers own your data | The chain IS your data |
-| Passwords | Ed25519 keypairs |
-| Trust the platform | Verify the signature |
-| History can be rewritten | Chain is append-only |
-| English-centric | Language-independent |
+The internet's primitive is the URL — a pointer to a document on someone else's server. When the server goes down, the document dies. When the company pivots, your data moves. When the Terms of Service change, you comply or lose everything.
 
-## Packages
+DOT replaces the document with the **observation**. An observation is:
 
-### The Protocol (Day 1)
+- **Signed** (Ed25519 — you prove you wrote it)
+- **Hashed** (BLAKE3 — tamper-evident, instant verification)
+- **Chained** (each DOT links to its parent — append-only history)
+- **Typed** (measure, state, event, claim, bond)
+- **Language-independent** (the DOT compiler renders in any language)
 
-| Package | What |
-|---------|------|
-| `@dot-protocol/core` | The kernel. observe, sign, verify, chain, hash. BLAKE3 + Ed25519. |
-| `@dot-protocol/chain` | Merkle DAG. CRDT merge. SQLite + memory storage. |
-| `@dot-protocol/lang` | The DOT language. Lexer, parser, compiler. DOT compiles DOT. |
-| `@dot-protocol/mesh` | P2P transport. WebSocket. Broadcast, gossip, content routing. |
-| `@dot-protocol/cli` | `dot run`, `dot check`, `dot compile`, `dot explain`. The door. |
+The chain of DOTs IS your data. The chain lives on your device. Replicate it to other devices and it lives there too. No server in the loop. No company in the middle.
 
-### The Network
+**The chain is the room. The room lives wherever the chain lives.**
 
-| Package | What |
-|---------|------|
-| `@dot-protocol/seal` | Chain-depth trust. X25519 encrypted channels. Forward secrecy. |
-| `@dot-protocol/sync` | Multi-device replication. Offline-first. Ephemeral DOT erasure. |
-| `@dot-protocol/signal` | DOT-RTC. WebRTC signaling via DOT chain. Voice/video metadata. |
+---
 
-### The Interface
+## Install
 
-| Package | What |
-|---------|------|
-| `@dot-protocol/mark` | DOT-MARK → HTML. Trust badges. Phishing detection. |
-| `@dot-protocol/script` | Runtime. State-as-chain. Reactive streams. Agent scheduler. |
-| `@dot-protocol/viewer` | Tree HTML renderer. Self-contained. Under 26KB. |
-| `@dot-protocol/browser` | WASM build (Ed25519 + BLAKE3). Single HTML file. Works offline. |
+```bash
+npm install @dot-protocol/core
+```
 
-### The Applications
+Or try it without installing:
 
-| Package | What |
-|---------|------|
-| `@dot-protocol/room` | Everything is a .room. The chain IS the room. |
-| `@dot-protocol/minds` | AI minds. Feynman, Rumi, Shannon. Provider-agnostic. Cited sources. |
-| `@dot-protocol/chat` | Group chat. Messages, threads, reactions. All DOTs. |
-| `@dot-protocol/tree` | The knowledge tree. Observe. Flow. Connect. |
+```bash
+npx @dot-protocol/cli observe "hello world"
+```
 
-### Tools
+A signed DOT appears in your terminal. You own it. No one else does.
 
-| Package | What |
-|---------|------|
-| `@dot-protocol/mcp` | 11 MCP tools for AI agents. Claude Code can create DOTs. |
-| `@dot-protocol/selfhost` | DOT compiles DOT. 7 `.dot` programs. selfHostingScore = 100%. |
-| `@dot-protocol/bridge` | v0.3.0 → current converter. The chain is unbroken. |
-| `@dot-protocol/fs` | DOT-FS. Sidecar chains. Every write is a signed observation. |
-
-### Rust
-
-| Crate | What |
-|-------|------|
-| `dot-core` | Rust mirror of core. 275 tests. |
-| `dot-wasm` | WASM build. Ed25519 (ed25519-dalek) + BLAKE3. 211KB. |
+---
 
 ## The DOT Language
+
+DOT has its own language. DOT compiles DOT.
 
 ```dot
 observe measure: temperature at sensor_7 = 82.3
@@ -99,49 +64,112 @@ observe measure: temperature at sensor_7 = 82.3
   .pulse(alert: "overheating")
   .chain(previous: last_observation)
   .mesh(to: [maintenance, dashboard])
-  .fade(after: 24 hours, to: archive)
-  .forge(action: shutdown(reactor_3))
+  .fade(after: 24h, to: archive)
 ```
 
 Four bases: **Sign, Time, Chain, Verify.**
 Seven functions: **Gate, Pulse, Chain, Mesh, Bloom, Fade, Forge.**
-Five observation types: **measure, state, event, claim, bond.**
+Five types: **measure, state, event, claim, bond.**
 
-## Numbers
+The language compiles to TypeScript and English. Rust and WASM run the crypto in browsers. A `.dot` file is a program, a specification, and a human-readable document simultaneously.
 
-- **3,048** tests passing
-- **22** packages
-- **286** source files
-- **58,057** lines
-- **2** Rust crates (native + WASM)
-- **14** commits from scaffold to shipping
+---
 
-## The Lineage
+## What's Inside
 
-DOT Protocol v0.3.0 (archived at [dot-protocol/v0](https://github.com/dot-protocol/protocol)) is the ancestor. This repo is the descendant. The `@dot-protocol/bridge` package converts v0.3.0 DOTs to current format. Ed25519 signatures cross-verify between versions. The chain is unbroken.
+22 packages. 3,048 tests. 58K lines. TypeScript + Rust + WASM.
 
-## Run Tests
+### The Protocol
+
+| Package | What it does |
+|---|---|
+| **core** | The kernel. `observe`, `sign`, `verify`, `chain`, `hash`. |
+| **chain** | Merkle DAG with CRDT merge. SQLite + memory storage. |
+| **lang** | Lexer, parser, type checker, codegen. DOT compiles DOT. |
+| **mesh** | P2P broadcast over WebSocket. Gossip. Content routing. |
+| **seal** | Chain-depth trust scoring. X25519 encrypted channels. |
+| **sync** | Multi-device replication. Offline queue. Ephemeral erasure. |
+
+### The Applications
+
+| Package | What it does |
+|---|---|
+| **room** | Everything is a `.room`. The chain IS the room. |
+| **minds** | AI minds grounded in primary sources. Feynman, Rumi, Shannon inside. |
+| **chat** | Group messaging. Threads. Reactions. Every message is a signed DOT. |
+| **signal** | WebRTC signaling via DOT chain. Voice and video metadata on chain. |
+| **tree** | Knowledge tree. Observe → Flow → Connect. |
+
+### The Tools
+
+| Package | What it does |
+|---|---|
+| **cli** | `dot observe`, `dot check`, `dot compile`, `dot explain`. |
+| **mcp** | 11 MCP tools. Claude Code can create and verify DOTs. |
+| **browser** | WASM build. Single HTML file. Works offline. No server. |
+| **selfhost** | 7 `.dot` programs that implement the DOT protocol in DOT. |
+| **mark** | DOT-MARK → HTML compiler with trust badges and phishing detection. |
+| **bridge** | Converts v0.3.0 DOTs to current format. The chain is unbroken. |
+
+### Rust
+
+| Crate | What it does |
+|---|---|
+| **dot-core** | Rust mirror of the kernel. 275 tests. |
+| **dot-wasm** | Ed25519 (ed25519-dalek) + BLAKE3. 211KB. Runs in any browser. |
+
+---
+
+## .the.first.room
+
+The first room exists. It has a genesis DOT:
+
+> *"The first room. Where observation begins."*
+
+Three minds are inside: Feynman, Rumi, Shannon. Every observation is signed, chained, hashed. The room IS its chain. Wherever the chain is replicated, the room exists.
+
+Open `packages/first-room/index.html` in a browser. You're in.
+
+---
+
+## Run Everything
 
 ```bash
 git clone https://github.com/dot-protocol/dot
 cd dot
 pnpm install
-pnpm test          # 3,048 tests
-cargo test --lib   # 275 Rust tests
+pnpm test        # 3,048 tests
+cargo test       # 275 Rust tests
 ```
+
+---
+
+## The Lineage
+
+This repo descends from [DOT Protocol v0.3.0](https://github.com/dot-protocol/protocol). The `bridge` package converts between versions. Ed25519 signatures cross-verify. The chain is unbroken.
+
+---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Every commit message is a DOT observation:
+Every contribution is a DOT. Every commit message follows the observation format:
 
 ```
 observe event: "add CRDT merge" .chain(previous: "Merkle DAG")
 ```
 
-## License
-
-Apache-2.0. Patent protection included. See [LICENSE](LICENSE).
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ---
 
-*DOT is 0 bytes. DOT is the contact itself. The point of observation, existing in superposition until observed. When observed, the wave function collapses to the first bit.*
+## License
+
+[Apache-2.0](./LICENSE). Patent protection included. Build on this freely.
+
+---
+
+<p align="center">
+<em>DOT is 0 bytes. The contact itself.<br>
+The point of observation, existing in superposition until observed.<br>
+When observed, the wave function collapses to the first bit.</em>
+</p>
