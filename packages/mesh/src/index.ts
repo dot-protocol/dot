@@ -8,6 +8,8 @@
 // Transport
 export type { Transport } from './transport/interface.js';
 export { MemoryHub, MemoryTransport } from './transport/memory.js';
+export { WSTransport, createWSTransport } from './transport/ws.js';
+export type { WSTransportConfig, WSNodeConfig, WSNodeResult } from './transport/ws.js';
 
 // Node
 export { createNode } from './node.js';

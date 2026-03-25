@@ -31,3 +31,6 @@ export type {
   PayloadMode,
   IdentityLevel,
 } from './types.js';
+
+export { type Result, type DOTError, ok, err, isOk, isErr, unwrap, unwrapOr } from './result.js';
+export { safeVerify, safeSign, safeDecode, safeHash } from './safe.js';

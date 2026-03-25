@@ -15,10 +15,12 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@dot-protocol/chain": "workspace:*",
     "@dot-protocol/core": "workspace:*",
-    "@dot-protocol/chain": "workspace:*"
+    "ws": "^8.20.0"
   },
   "devDependencies": {
+    "@types/ws": "^8.18.1",
     "typescript": "^5.8.0",
     "vitest": "^3.1.0"
   },
