@@ -1,0 +1,28 @@
+{
+  "name": "@dot-protocol/sync",
+  "version": "1.0.0-alpha.0",
+  "description": "Chain replication over mesh — offline-first sync and ephemeral DOTs for DOT Protocol.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@dot-protocol/core": "workspace:*",
+    "@dot-protocol/chain": "workspace:*",
+    "@dot-protocol/mesh": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
+  },
+  "license": "MIT"
+}
