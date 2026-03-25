@@ -1,0 +1,29 @@
+{
+  "name": "@dot-protocol/browser",
+  "version": "1.0.0-alpha.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@dot-protocol/core": "workspace:*",
+    "@dot-protocol/chain": "workspace:*",
+    "@dot-protocol/tree": "workspace:*",
+    "@dot-protocol/viewer": "workspace:*",
+    "@dot-protocol/script": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
+  },
+  "license": "MIT"
+}

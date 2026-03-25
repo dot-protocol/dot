@@ -37,6 +37,31 @@ importers:
         specifier: ^3.1.0
         version: 3.2.4(@types/node@25.5.0)
 
+  packages/browser:
+    dependencies:
+      '@dot-protocol/chain':
+        specifier: workspace:*
+        version: link:../chain
+      '@dot-protocol/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dot-protocol/script':
+        specifier: workspace:*
+        version: link:../script
+      '@dot-protocol/tree':
+        specifier: workspace:*
+        version: link:../tree
+      '@dot-protocol/viewer':
+        specifier: workspace:*
+        version: link:../viewer
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.1.0
+        version: 3.2.4(@types/node@25.5.0)
+
   packages/chain:
     dependencies:
       '@dot-protocol/core':
