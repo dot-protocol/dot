@@ -1,0 +1,16 @@
+# GitHub Linguist Language Definition for DOT Protocol
+# Submit as PR to https://github.com/github-linguist/linguist
+# File: lib/linguist/languages.yml (add under "D" section alphabetically)
+
+# --- PATCH ---
+# Add after "Dockerfile:" entry:
+
+DOT Protocol:
+  type: programming
+  color: "#818cf8"
+  extensions:
+    - ".dot"
+  tm_scope: source.dot
+  ace_mode: text
+  language_id: 999001
+  # Note: language_id must be unique — check existing IDs before submitting PR

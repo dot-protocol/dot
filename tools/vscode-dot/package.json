@@ -1,0 +1,33 @@
+{
+  "name": "dot-language",
+  "displayName": "DOT Language",
+  "description": "Syntax highlighting for the DOT Protocol language (.dot files)",
+  "version": "1.0.0",
+  "publisher": "dot-protocol",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dot-protocol/dot"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "dot",
+        "aliases": ["DOT", "dot"],
+        "extensions": [".dot"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "dot",
+        "scopeName": "source.dot",
+        "path": "./syntaxes/dot.tmLanguage.json"
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "name": "@dot-protocol/core",
-  "version": "1.0.0-alpha.0",
+  "name": "@dotprotocol/core",
+  "version": "1.0.0",
   "description": "The DOT STCV kernel. observe/sign/verify/chain/hash. FHE by default.",
   "type": "module",
   "main": "src/index.ts",

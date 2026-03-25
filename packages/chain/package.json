@@ -1,6 +1,6 @@
 {
-  "name": "@dot-protocol/chain",
-  "version": "1.0.0-alpha.0",
+  "name": "@dotprotocol/chain",
+  "version": "1.0.0",
   "description": "Merkle DAG with CRDT merge and pluggable storage for DOT Protocol.",
   "type": "module",
   "main": "src/index.ts",
