@@ -1,7 +1,6 @@
 {
-  "name": "@dot-protocol/chain",
-  "version": "1.0.0",
-  "description": "Merkle DAG with CRDT merge and pluggable storage for DOT Protocol.",
+  "name": "@dot-protocol/compiler",
+  "version": "1.0.0-alpha.0",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -15,14 +14,9 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "dependencies": {
-    "@dot-protocol/core": "workspace:*",
-    "better-sqlite3": "^11.0.0"
-  },
   "devDependencies": {
     "typescript": "^5.8.0",
-    "vitest": "^3.1.0",
-    "@types/better-sqlite3": "^7.6.0"
+    "vitest": "^3.1.0"
   },
   "license": "Apache-2.0"
 }

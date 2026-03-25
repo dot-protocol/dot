@@ -9,6 +9,13 @@
  * - Feynman: physics, education, curiosity (1918–1988)
  * - Rumi: poetry, spirituality, love (1207–1273)
  * - Shannon: information theory, mathematics (1916–2001)
+ * - Franklin: diplomacy, science, invention, wit (1706–1790)
+ * - Hypatia: mathematics, astronomy, philosophy (c.360–415 CE)
+ * - Ibn Khaldun: history, sociology, economics, civilization (1332–1406)
+ * - Leibniz: mathematics, philosophy, logic, computation (1646–1716)
+ * - da Vinci: art, engineering, anatomy, observation (1452–1519)
+ * - Faraday: electromagnetism, chemistry, experimental science (1791–1867)
+ * - Menger: economics, value theory, Austrian school (1840–1921)
  *
  * @example
  * import { createFeynman, createRumi, createShannon } from '@dot-protocol/minds';
@@ -37,7 +44,14 @@ export { Mind, createMind } from './mind.js';
 // LocalInference (no-API provider)
 export { LocalInference, extractKeywords } from './local-inference.js';
 
-// The three minds
+// The ten minds
 export { createFeynman, FEYNMAN_CONFIG } from './feynman.js';
 export { createRumi, RUMI_CONFIG } from './rumi.js';
 export { createShannon, SHANNON_CONFIG } from './shannon.js';
+export { createFranklin, FRANKLIN_CONFIG } from './franklin.js';
+export { createHypatia, HYPATIA_CONFIG } from './hypatia.js';
+export { createIbnKhaldun, IBN_KHALDUN_CONFIG } from './ibn_khaldun.js';
+export { createLeibniz, LEIBNIZ_CONFIG } from './leibniz.js';
+export { createDaVinci, DA_VINCI_CONFIG } from './da_vinci.js';
+export { createFaraday, FARADAY_CONFIG } from './faraday.js';
+export { createMenger, MENGER_CONFIG } from './menger.js';

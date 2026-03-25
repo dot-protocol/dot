@@ -1,5 +1,5 @@
 {
-  "name": "@dotprotocol/mesh",
+  "name": "@dot-protocol/mesh",
   "version": "1.0.0",
   "type": "module",
   "main": "src/index.ts",
