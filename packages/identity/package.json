@@ -1,0 +1,12 @@
+{
+  "name": "@dotprotocol/identity",
+  "version": "0.4.0",
+  "description": "DOT Protocol identity — DID, profiles, auth, cross-chain linking.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src"],
+  "license": "MIT"
+}
