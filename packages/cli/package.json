@@ -1,7 +1,7 @@
 {
   "name": "@dot-protocol/cli",
   "version": "1.0.0",
-  "description": "DOT Protocol CLI — run, compile, check, and explain DOT programs. Ed25519 identity management.",
+  "description": "DOT Protocol CLI \u2014 run, compile, check, and explain DOT programs. Ed25519 identity management.",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -27,5 +27,14 @@
     "typescript": "^5.8.0",
     "vitest": "^3.1.0"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dot-protocol/dot.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/dot-protocol/dot/tree/main/packages/cli#readme",
+  "bugs": {
+    "url": "https://github.com/dot-protocol/dot/issues"
+  }
 }

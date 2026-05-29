@@ -1,0 +1,51 @@
+{
+  "name": "@dotprotocol/wrapper",
+  "version": "0.3.0",
+  "description": "Wrap any binary protocol (HTTPS, WebSocket, JSON, raw bytes) as a signed, compressed DOT chain.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dot-protocol",
+    "wrapper",
+    "compression",
+    "signing"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "dependencies": {
+    "@dotprotocol/core": "workspace:*",
+    "@dotprotocol/compression": "workspace:*",
+    "@noble/curves": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dot-protocol/dot.git",
+    "directory": "packages/wrapper"
+  },
+  "homepage": "https://github.com/dot-protocol/dot/tree/main/packages/wrapper#readme",
+  "bugs": {
+    "url": "https://github.com/dot-protocol/dot/issues"
+  }
+}

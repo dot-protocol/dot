@@ -1,0 +1,53 @@
+{
+  "name": "@dotprotocol/relay",
+  "version": "0.3.0",
+  "description": "CHORUS relay client and server for DOT Protocol.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./server": {
+      "import": "./dist/server.js",
+      "require": "./dist/server.cjs",
+      "types": "./dist/server.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dotprotocol/core": "workspace:*"
+  },
+  "optionalDependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@noble/curves": "^2.0.1",
+    "@types/ws": "^8.18.0",
+    "ws": "^8.18.0"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dot-protocol/dot.git",
+    "directory": "packages/relay"
+  },
+  "homepage": "https://github.com/dot-protocol/dot/tree/main/packages/relay#readme",
+  "bugs": {
+    "url": "https://github.com/dot-protocol/dot/issues"
+  }
+}
