@@ -1,6 +1,7 @@
 {
   "name": "@dot-protocol/mesh",
   "version": "1.0.0",
+  "description": "Content-addressed peer-to-peer DOT routing. Nodes discover, broadcast, and fetch DOTs by hash over pluggable transports.",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
