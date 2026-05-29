@@ -1,6 +1,7 @@
 {
   "name": "@dot-protocol/cli",
   "version": "1.0.0",
+  "description": "DOT Protocol CLI — run, compile, check, and explain DOT programs. Ed25519 identity management.",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
