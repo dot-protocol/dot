@@ -1,6 +1,7 @@
 {
   "name": "@dot-protocol/lang",
   "version": "1.0.0",
+  "description": "DOT language lexer, parser, and AST. Lex and parse DOT observation programs into typed syntax trees.",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
