@@ -30,5 +30,14 @@
   "files": [
     "dist"
   ],
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dot-protocol/dot.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/dot-protocol/dot/tree/main/packages/core#readme",
+  "bugs": {
+    "url": "https://github.com/dot-protocol/dot/issues"
+  }
 }
