@@ -1,6 +1,12 @@
-# DOT
+# dot
 
-**The internet is built on documents. We're replacing it with contacts.**
+**The trust layer for the agent internet — a signed observation, Apache-2.0, no take rate.**
+
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Language](https://img.shields.io/badge/language-TypeScript%20%2B%20Rust-3178c6.svg)](packages/)
+[![TS Tests](https://img.shields.io/badge/TS%20tests-3%2C048%20passing-brightgreen.svg)](packages/)
+[![Rust Tests](https://img.shields.io/badge/Rust%20tests-275%20passing-brightgreen.svg)](rust/)
+[![Format](https://img.shields.io/badge/wire%20overhead-%3C256%20bytes-orange.svg)](packages/core/src/types.ts)
 
 A DOT is a signed observation. Timestamped. Chained. Verifiable. Language-independent.
 No server. No account. No password. Just a keypair and something worth observing.
@@ -144,9 +150,52 @@ cargo test       # 275 Rust tests
 
 ---
 
+## Why dot vs alternatives
+
+Three credible systems occupy similar territory. Here is an honest comparison.
+
+### Provara Protocol
+
+Provara is the closest parallel: Ed25519+SHA-256 signatures, Merkle chaining, append-only NDJSON, self-described as "sovereign tamper-evident memory for AI agents", approximately 110 tests.
+
+dot's differences: BLAKE3 over SHA-256 (faster, DoS-resistant), the STCV object model (all four bases — Sign, Time, Chain, Verify — optional and composable rather than a fixed binary header), and 22 packages covering the full stack from crypto kernel to group chat, language compiler, and WASM browser bundle. Provara is purpose-built for agent memory logs; dot is a composable substrate that memory logs, messaging, geo-location, reputation, and commerce build on the same primitive.
+
+### VIRP (IETF draft-howard-virp-03)
+
+VIRP is an IETF draft: Ed25519+HMAC, 28-byte fixed header, designed for IoT and constrained environments. Excellent minimalism. VIRP distributes key lookup out-of-band.
+
+dot's difference: the observer's public key travels with every DOT (in the `sign.observer` field), so any verifier can check a DOT without a separate key directory. This is a deliberate tradeoff: slightly larger wire size in exchange for zero external dependencies for verification. dot also adds the chain and verify bases — content hash and causal linkage — which VIRP leaves to the application.
+
+### Crovia Trust
+
+Crovia anchors records to Bitcoin for legal-grade timestamping. Strong immutability guarantee via Bitcoin's proof-of-work.
+
+dot's difference: dot makes no ledger dependency. Verification is pure cryptography — any recipient can verify any DOT offline, with no network call, no Bitcoin node, no Crovia infrastructure. For use cases that need legal-grade external notarization, Crovia is the right tool; for agent memory, peer-to-peer observation logging, and offline-first applications, the offline-verifiable model is correct.
+
+**Summary:** dot's position is the minimal composable primitive, zero take rate, no entity ownership, and a complete stack from binary crypto to group chat. It is not the only trust substrate, and it is not trying to be. It is the smallest thing that is still correct — and the largest thing you can build from it.
+
+---
+
 ## The Lineage
 
 This repo descends from [DOT Protocol v0.3.0](https://github.com/dot-protocol/protocol). The `bridge` package converts between versions. Ed25519 signatures cross-verify. The chain is unbroken.
+
+---
+
+## Built on dot
+
+These projects use the dot substrate:
+
+- **[dot-words](https://github.com/dot-protocol/dot-words)** — sovereign location addressing; reversible `(lat, lon, alt) ↔ 5 words`, zero dependencies
+- **[piperchat](https://github.com/dot-protocol/piperchat)** — end-to-end encrypted messaging; sealed-body DMs with X25519+AES-256-GCM
+
+Building something on dot? Open a PR to add it here.
+
+---
+
+## Star history
+
+[![Star History](https://api.star-history.com/svg?repos=dot-protocol/dot&type=Date)](https://star-history.com/#dot-protocol/dot&Date)
 
 ---
 
@@ -164,7 +213,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
-[Apache-2.0](./LICENSE). Patent protection included. Build on this freely.
+[Apache-2.0](./LICENSE). Patent protection included. Build on this freely. No take rate. No entity ownership.
 
 ---
 
