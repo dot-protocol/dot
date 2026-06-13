@@ -136,7 +136,7 @@ export async function createBrowserRuntime(
 
     async addLeaf(parentHash: string, content: string) {
       if (!tree) throw new Error('BrowserRuntime: call createTree() first');
-      const { leaf } = await addLeaf(tree, { parentHash, content, type: 'claim' });
+      const leaf = await addLeaf(tree, { parentHash, content, type: 'claim' });
       events.dispatchEvent(new CustomEvent('tree:leaf', { detail: { leaf } }));
     },
 
