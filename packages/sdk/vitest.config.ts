@@ -10,6 +10,8 @@ export default defineConfig({
       '@dot-protocol/chain': resolve(__dirname, '../chain/src/index.ts'),
       '@dotprotocol/relay': resolve(__dirname, '../relay/src/index.ts'),
       '@dotprotocol/wrapper': resolve(__dirname, '../wrapper/src/index.ts'),
+      '@dotprotocol/qr': resolve(__dirname, '../qr/src/index.ts'),
+      '@dotprotocol/arena': resolve(__dirname, '../arena/src/index.ts'),
     },
   },
   test: {
