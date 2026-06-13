@@ -230,7 +230,7 @@ describe('Ed25519', () => {
     const msg = new Uint8Array([1, 2, 3, 4, 5]);
     const sig = await sign(msg, secretKey);
     const tampered = new Uint8Array(msg);
-    tampered[0] ^= 0xff;
+    tampered[0] = tampered[0]! ^ 0xff;
     expect(await verify(tampered, sig, publicKey)).toBe(false);
   });
 
@@ -239,7 +239,7 @@ describe('Ed25519', () => {
     const msg = new TextEncoder().encode('sensitive observation');
     const sig = await sign(msg, secretKey);
     const tampered = new Uint8Array(sig);
-    tampered[0] ^= 0x01;
+    tampered[0] = tampered[0]! ^ 0x01;
     expect(await verify(msg, tampered, publicKey)).toBe(false);
   });
 
@@ -248,7 +248,7 @@ describe('Ed25519', () => {
     const msg = new Uint8Array([42]);
     const sig = await sign(msg, secretKey);
     const tampered = new Uint8Array(sig);
-    tampered[63] ^= 0x80;
+    tampered[63] = tampered[63]! ^ 0x80;
     expect(await verify(msg, tampered, publicKey)).toBe(false);
   });
 
