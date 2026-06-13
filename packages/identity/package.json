@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@dotprotocol/core": "workspace:*"
+    "@dot-protocol/core": "workspace:*"
   },
   "devDependencies": {},
   "license": "MIT",

@@ -272,7 +272,7 @@ import {
   toBytes,
   DotType,
   createBLSKeypair,
-} from '@dotprotocol/core';
+} from '@dot-protocol/core';
 import { LinearPredictor, NullPredictor, LastValuePredictor } from '../predictor.js';
 
 async function buildTestChain(n: number, tsStart = 1_700_000_000_000): Promise<Uint8Array[]> {

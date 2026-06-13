@@ -35,7 +35,7 @@
     "@types/node": "^20.0.0"
   },
   "dependencies": {
-    "@dotprotocol/core": "workspace:*"
+    "@dot-protocol/core": "workspace:*"
   },
   "repository": {
     "type": "git",

@@ -14,7 +14,7 @@ npm install @dotprotocol/wrapper
 
 ```js
 import { wrap, unwrap } from '@dotprotocol/wrapper';
-import { createKeypair } from '@dotprotocol/core';
+import { createKeypair } from '@dot-protocol/core';
 
 const keypair = await createKeypair();
 
@@ -84,8 +84,8 @@ for await (const dot of wrapStream(keypair, fs.createReadStream('big-file.bin'))
 Each 16 bytes of data requires 153 bytes of DOT — a 9.6× overhead. For large files, store the file externally (IPFS, S3) and use a single DOT as an attestation instead:
 
 ```js
-import { createDOT } from '@dotprotocol/core';
-import { sha256 } from '@dotprotocol/core';
+import { createDOT } from '@dot-protocol/core';
+import { sha256 } from '@dot-protocol/core';
 
 const hash    = await sha256(fileBytes);
 const pointer = hash.slice(0, 16);        // first 16 bytes of hash

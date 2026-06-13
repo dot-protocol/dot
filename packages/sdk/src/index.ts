@@ -9,7 +9,7 @@
  */
 
 // ── Core — DOT creation, signing, verification, BLS ─────────────────────────
-export * from '@dotprotocol/core';
+export * from '@dot-protocol/core';
 
 // ── Compression — batch v2, zstd, rANS, predictor, Weissman ─────────────────
 export * from '@dotprotocol/compression';
@@ -20,7 +20,7 @@ export * from '@dotprotocol/identity';
 
 // ── Chain — append-only worldline + pluggable storage ───────────────────────
 // (createChain, appendDOT, getHead, getRange, verifyChain, MemoryStorage — no conflicts)
-export * from '@dotprotocol/chain';
+export * from '@dot-protocol/chain';
 
 // ── Relay — CHORUS relay client + server ────────────────────────────────────
 // DOT_SIZE is excluded here — it conflicts with core's DOT_SIZE (both = 153).

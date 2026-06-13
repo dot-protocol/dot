@@ -1,6 +1,6 @@
 // @dotprotocol/wrapper — session management
 
-import { createKeypair, createBLSKeypair } from '@dotprotocol/core';
+import { createKeypair, createBLSKeypair } from '@dot-protocol/core';
 import type { WrapSession } from './types.js';
 
 /**

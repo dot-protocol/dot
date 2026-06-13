@@ -16,4 +16,4 @@ export type {
   BridgeHandle,
 } from './types.js';
 export type { DotIdentity, IdentityOptions } from './identity.js';
-export { DotType } from '@dotprotocol/core';
+export { DotType } from '@dot-protocol/core';

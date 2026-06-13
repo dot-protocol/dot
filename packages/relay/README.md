@@ -14,7 +14,7 @@ npm install @dotprotocol/relay
 
 ```js
 import { RelayClient } from '@dotprotocol/relay';
-import { toBytes, fromBytes } from '@dotprotocol/core';
+import { toBytes, fromBytes } from '@dot-protocol/core';
 
 const relay = new RelayClient('wss://dotdotdot.rocks');
 

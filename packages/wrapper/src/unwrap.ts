@@ -1,7 +1,7 @@
 // @dotprotocol/wrapper — unwrap()
 
 import { deserializeBatchV2 } from '@dotprotocol/compression';
-import { verifyAggregateSameSigner } from '@dotprotocol/core';
+import { verifyAggregateSameSigner } from '@dot-protocol/core';
 import type { UnwrappedPayload, UnwrapOptions } from './types.js';
 import { PROTOCOL_FROM_ID } from './types.js';
 

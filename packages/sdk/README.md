@@ -56,7 +56,7 @@ import {
 For production apps that run in the browser, import only what you need:
 
 ```bash
-npm install @dotprotocol/core        # if you only need primitives
+npm install @dot-protocol/core        # if you only need primitives
 npm install dot-protocol              # if you want the high-level API
 npm install @dotprotocol/qr          # if you only need QR
 ```
@@ -68,8 +68,8 @@ The SDK is the kitchen sink. Smaller focused installs produce smaller bundles.
 | Package | Exports |
 |---|---|
 | `dot-protocol` | `DOT` |
-| `@dotprotocol/core` | Primitives, types, faces, transforms |
-| `@dotprotocol/chain` | WorldLine, Four-Score |
+| `@dot-protocol/core` | Primitives, types, faces, transforms |
+| `@dot-protocol/chain` | WorldLine, Four-Score |
 | `@dotprotocol/relay` | RelayClient, frames |
 | `@dotprotocol/identity` | Keypair persistence, DID |
 | `@dotprotocol/compression` | pack / unpack |

@@ -35,7 +35,7 @@ import {
   aggregateSignatures,
   verifyAggregateSameSigner,
   type BLSKeypair,
-} from '@dotprotocol/core';
+} from '@dot-protocol/core';
 import { encodeTimestampDeltas, decodeTimestampDeltas } from './timestamp-delta.js';
 import { encodePayloadTypes, decodePayloadTypes } from './rle.js';
 import { compressWithDictionary, decompressWithDictionary } from './zstd.js';

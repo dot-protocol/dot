@@ -30,7 +30,7 @@ import {
   toBytes,
   DotType,
   createBLSKeypair,
-} from '@dotprotocol/core';
+} from '@dot-protocol/core';
 import { serializeBatchV2 } from '../batch-v2.js';
 import { trainDictionary } from '../zstd.js';
 import { generateSensorStream } from '../sample-generator.js';

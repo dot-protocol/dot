@@ -17,7 +17,7 @@ import * as http from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { writeFileSync, rmSync, existsSync } from 'node:fs';
-import { createKeypair } from '@dotprotocol/core';
+import { createKeypair } from '@dot-protocol/core';
 
 // ─── session.ts: createSessionFromKeypair (lines 33-44) ──────────────────────
 
@@ -230,7 +230,7 @@ describe('unwrap() — no blsPublicKey (decodeFrameWithoutBLSVerification)', () 
     // Build a frame with timestampDelta=false, payloadTypeRLE=false
     // so decodeFrameWithoutBLSVerification hits the else branches
     const { serializeBatchV2 } = await import('@dotprotocol/compression');
-    const { createBLSKeypair, createDOT, toBytes, DotType } = await import('@dotprotocol/core');
+    const { createBLSKeypair, createDOT, toBytes, DotType } = await import('@dot-protocol/core');
     const keypair = await createKeypair();
     const blsKeypair = createBLSKeypair();
 
@@ -279,7 +279,7 @@ describe('unwrap() — no blsPublicKey (decodeFrameWithoutBLSVerification)', () 
     // Build a valid frame with raw types (no RLE) but not enough payload bytes
     // Use a no-delta, no-RLE frame with 1 dot but no payload bytes after types
     const { serializeBatchV2 } = await import('@dotprotocol/compression');
-    const { createBLSKeypair, createDOT, toBytes, DotType } = await import('@dotprotocol/core');
+    const { createBLSKeypair, createDOT, toBytes, DotType } = await import('@dot-protocol/core');
     const keypair = await createKeypair();
     const blsKeypair = createBLSKeypair();
 
@@ -315,7 +315,7 @@ describe('unwrap() — no blsPublicKey (decodeFrameWithoutBLSVerification)', () 
     // When unwrapped via the unverified path, decodeFrameWithoutBLSVerification returns the DOT,
     // assembled = 16 bytes, then originalLength check fires: dataEnd > 16 → RangeError.
     const { serializeBatchV2, encodeTimestampDeltas, encodePayloadTypes } = await import('@dotprotocol/compression');
-    const { createBLSKeypair, createDOT, toBytes, DotType } = await import('@dotprotocol/core');
+    const { createBLSKeypair, createDOT, toBytes, DotType } = await import('@dot-protocol/core');
     const keypair = await createKeypair();
     const blsKeypair = createBLSKeypair();
 

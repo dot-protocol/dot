@@ -1,6 +1,6 @@
 // @dotprotocol/wrapper — wrap()
 
-import { createKeypair, createBLSKeypair, createDOT, toBytes, DotType } from '@dotprotocol/core';
+import { createKeypair, createBLSKeypair, createDOT, toBytes, DotType } from '@dot-protocol/core';
 import { serializeBatchV2 } from '@dotprotocol/compression';
 import { createSession } from './session.js';
 import type { WrappedChain, WrapOptions, WrapSession } from './types.js';

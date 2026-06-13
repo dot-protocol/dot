@@ -30,7 +30,7 @@ import {
   toBytes,
   DotType,
   createBLSKeypair,
-} from '@dotprotocol/core';
+} from '@dot-protocol/core';
 import {
   serializeBatchV2,
   deserializeBatchV2,

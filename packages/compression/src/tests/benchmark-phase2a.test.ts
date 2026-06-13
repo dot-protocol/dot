@@ -23,7 +23,7 @@ import {
   DotType,
   createBLSKeypair,
   batchPackBLS,
-} from '@dotprotocol/core';
+} from '@dot-protocol/core';
 import { serializeBatchV2 } from '../batch-v2.js';
 
 // ─── Table Formatting ─────────────────────────────────────────────────────────

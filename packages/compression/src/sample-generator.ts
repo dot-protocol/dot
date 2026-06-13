@@ -4,7 +4,7 @@
  * Generates arrays of 153-byte DOT Uint8Arrays for various sensor stream
  * profiles. Produces correlated, realistic data without external dependencies.
  */
-import { createKeypair, createDOT, toBytes, DotType } from '@dotprotocol/core';
+import { createKeypair, createDOT, toBytes, DotType } from '@dot-protocol/core';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
