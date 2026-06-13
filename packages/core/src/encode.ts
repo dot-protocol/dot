@@ -26,7 +26,9 @@
  *   0x52 = fhe.decryptable_by (one entry per occurrence)
  */
 
+import { isLegacyDOT, legacyFromBytes, legacyToBytes } from './legacy.js';
 import type { DOT, ObservationType, PayloadMode, IdentityLevel } from './types.js';
+import type { LegacyDOT } from './legacy.js';
 
 // Tag byte constants
 const TAG_PAYLOAD = 0x01;
@@ -106,7 +108,11 @@ const decoder = new TextDecoder();
  * @param dot - The DOT to encode
  * @returns Encoded bytes (0 bytes for an empty DOT)
  */
-export function toBytes(dot: DOT): Uint8Array {
+export function toBytes(dot: DOT | LegacyDOT): Uint8Array {
+  if (isLegacyDOT(dot)) {
+    return legacyToBytes(dot);
+  }
+
   const fields: Uint8Array[] = [];
 
   // 0x01: payload
@@ -204,6 +210,10 @@ export function toBytes(dot: DOT): Uint8Array {
  * @throws {Error} If the TLV framing is malformed (e.g., declared length exceeds buffer)
  */
 export function fromBytes(bytes: Uint8Array): DOT {
+  if (bytes.length === 153) {
+    return legacyFromBytes(bytes) as unknown as DOT;
+  }
+
   const dot: DOT = {};
 
   let pos = 0;

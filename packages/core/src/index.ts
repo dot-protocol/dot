@@ -23,6 +23,21 @@ export { computeTrust } from './trust.js';
 export { createIdentity } from './identity.js';
 export type { Identity } from './identity.js';
 
+export {
+  LEGACY_DOT_SIZE,
+  DotType,
+  createKeypair,
+  createDOT,
+  verifyDOT,
+  checkChain,
+  createBLSKeypair,
+  signBLS,
+  aggregateSignatures,
+  verifyAggregateSameSigner,
+  batchPackBLS,
+} from './legacy.js';
+export type { LegacyKeypair as Keypair, LegacyDOT, BLSKeypair, CreateDOTOptions } from './legacy.js';
+
 export { computeLevel, DOTLevel } from './types.js';
 export type {
   DOT,
