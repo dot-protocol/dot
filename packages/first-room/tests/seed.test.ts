@@ -3,6 +3,10 @@
  */
 
 import { describe, it, expect } from 'vitest';
+import { existsSync } from 'node:fs';
+import { rm, mkdtemp } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { verify_chain } from '@dot-protocol/chain';
 import { seedFirstRoom, generateSeedHTML } from '../src/seed.js';
 import { getChainView } from '../src/room-chain.js';
@@ -78,45 +82,58 @@ describe('seedFirstRoom', () => {
 });
 
 describe('generateSeedHTML', () => {
+  async function withTempOutput<T>(callback: (outPath: string) => Promise<T>): Promise<T> {
+    const dir = await mkdtemp(join(tmpdir(), 'first-room-'));
+    try {
+      return await callback(join(dir, 'the-first-room.html'));
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  }
+
+  async function generateTestHTML(): Promise<string> {
+    return withTempOutput((outPath) => generateSeedHTML(outPath));
+  }
+
   it('returns valid HTML string', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     expect(html).toBeTruthy();
     expect(html.trim()).toMatch(/^<!DOCTYPE html>/i);
   });
 
   it('HTML contains .the.first.room', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     expect(html).toContain('.the.first.room');
   });
 
   it('HTML contains Rumi quote', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     expect(html).toContain('Rumi');
   });
 
   it('HTML contains Feynman quote', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     expect(html).toContain('Feynman');
   });
 
   it('HTML contains observe input', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     expect(html).toContain('observe-input');
   });
 
   it('HTML is under 50KB', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     const bytes = new TextEncoder().encode(html).length;
     expect(bytes).toBeLessThan(50 * 1024);
   });
 
   it('HTML contains chain verified indicator', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     expect(html).toContain('verified');
   });
 
   it('HTML has at least 4 DOT cards', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     // Count dot-card occurrences
     const matches = html.match(/class="dot-card/g);
     expect(matches).not.toBeNull();
@@ -124,13 +141,14 @@ describe('generateSeedHTML', () => {
   });
 
   it('HTML has no external script src', async () => {
-    const html = await generateSeedHTML();
+    const html = await generateTestHTML();
     expect(html).not.toMatch(/<script[^>]+src="https?:\/\//);
   });
 
-  it('file is written to /Users/blaze/Downloads/the-first-room.html', async () => {
-    await generateSeedHTML();
-    const { existsSync } = await import('node:fs');
-    expect(existsSync('/Users/blaze/Downloads/the-first-room.html')).toBe(true);
+  it('file is written to the requested output path', async () => {
+    await withTempOutput(async (outPath) => {
+      await generateSeedHTML(outPath);
+      expect(existsSync(outPath)).toBe(true);
+    });
   });
 });

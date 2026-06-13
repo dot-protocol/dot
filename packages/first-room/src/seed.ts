@@ -8,13 +8,14 @@
  *   2. "The wound is the place where the light enters you." — Rumi (Connect branch)
  *   3. "The first principle is that you must not fool yourself." — Feynman (Flow branch)
  *
- * generateSeedHTML() writes to /Users/blaze/Downloads/the-first-room.html
+ * generateSeedHTML() writes to the user's Downloads directory by default.
  */
 
-import { createIdentity } from '@dot-protocol/core';
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { dirname, join } from 'node:path';
 import type { FirstRoom } from './room-chain.js';
-import { createFirstRoom, addObservation, addMember } from './room-chain.js';
+import { createFirstRoom, addObservation } from './room-chain.js';
 import { generateRoomHTML } from './html-room.js';
 
 /** Seed observations with their branch context. */
@@ -52,16 +53,22 @@ export async function seedFirstRoom(): Promise<FirstRoom> {
 }
 
 /**
- * Generates the HTML for the seeded first room and writes it to
- * /Users/blaze/Downloads/the-first-room.html.
+ * Default path used by the seed generator CLI.
+ */
+export function getDefaultSeedHTMLPath(): string {
+  return join(homedir(), 'Downloads', 'the-first-room.html');
+}
+
+/**
+ * Generates the HTML for the seeded first room and writes it to an output path.
  *
  * Returns the HTML string.
  */
-export async function generateSeedHTML(): Promise<string> {
+export async function generateSeedHTML(outPath = getDefaultSeedHTMLPath()): Promise<string> {
   const room = await seedFirstRoom();
   const html = await generateRoomHTML(room);
 
-  const outPath = '/Users/blaze/Downloads/the-first-room.html';
+  mkdirSync(dirname(outPath), { recursive: true });
   writeFileSync(outPath, html, 'utf8');
 
   return html;
