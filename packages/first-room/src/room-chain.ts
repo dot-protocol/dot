@@ -12,7 +12,6 @@ import {
   computeTrust,
   createIdentity,
   hash,
-  bufToHex as coreBufToHex,
 } from '@dot-protocol/core';
 import type { DOT, Identity } from '@dot-protocol/core';
 import {
