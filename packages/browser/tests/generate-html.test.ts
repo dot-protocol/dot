@@ -2,15 +2,17 @@
  * generate-html.test.ts — Generates the single-file HTML deliverable.
  *
  * Run with: npx vitest run packages/browser/tests/generate-html.test.ts
- * Output: /Users/blaze/Downloads/dot-protocol.html
+ * Output: temporary test directory
  */
 
 import { describe, it, expect } from 'vitest';
 import { generateSingleFile } from '../src/single-file.js';
-import { writeFileSync } from 'fs';
+import { mkdtempSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { tmpdir } from 'os';
 
 describe('R855 deliverable: single HTML file', () => {
-  it('generates and writes dot-protocol.html to Downloads', async () => {
+  it('generates and writes dot-protocol.html to a temporary directory', async () => {
     const html = await generateSingleFile({
       title: 'DOT Protocol',
       includeSample: true,
@@ -20,8 +22,8 @@ describe('R855 deliverable: single HTML file', () => {
     const size = Buffer.byteLength(html, 'utf8');
     console.log('\nHTML deliverable size:', size, 'bytes', '(' + (size / 1024).toFixed(1) + 'KB)');
 
-    // Write the file
-    const outputPath = '/Users/blaze/Downloads/dot-protocol.html';
+    const outputDir = mkdtempSync(join(tmpdir(), 'dot-protocol-html-'));
+    const outputPath = join(outputDir, 'dot-protocol.html');
     writeFileSync(outputPath, html, 'utf8');
     console.log('Written to:', outputPath);
 
