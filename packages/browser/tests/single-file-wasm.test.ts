@@ -12,7 +12,9 @@
 import { describe, it, expect } from 'vitest';
 import { generateSingleFile } from '../src/single-file.js';
 import { getWasmSize } from '../src/wasm-loader.js';
-import { writeFileSync } from 'fs';
+import { mkdtempSync, writeFileSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -222,10 +224,10 @@ describe('generateSingleFile({ includeWasm: true }) — HTML structure', () => {
   });
 });
 
-// ── Writes the WASM version to Downloads ─────────────────────────────────
+// ── Writes the WASM version to a temporary directory ─────────────────────
 
 describe('R855 deliverable: WASM-powered single HTML file', () => {
-  it('generates and writes the-tree.html to Downloads', async () => {
+  it('generates and writes the-tree.html to a temporary directory', async () => {
     const html = await generateSingleFile({
       title: 'The Tree — DOT Protocol',
       includeWasm: true,
@@ -233,7 +235,8 @@ describe('R855 deliverable: WASM-powered single HTML file', () => {
     });
 
     const size = byteSize(html);
-    const outputPath = '/Users/blaze/Downloads/the-tree.html';
+    const outputDir = mkdtempSync(join(tmpdir(), 'dot-protocol-wasm-html-'));
+    const outputPath = join(outputDir, 'the-tree.html');
     writeFileSync(outputPath, html, 'utf8');
 
     console.log('\nWASM deliverable size:', size, 'bytes', '(' + (size / 1024).toFixed(1) + 'KB)');
