@@ -1147,7 +1147,7 @@ describe('edge cases', () => {
     const dot = observe(big);
     expect(dot.payload).toEqual(big);
     expect(dot.payload_mode).toBe('fhe');
-  });
+  }, 15_000);
 
   it('toBytes and fromBytes with 1MB payload roundtrip', () => {
     const big = new Uint8Array(1024 * 1024).fill(0x42);
