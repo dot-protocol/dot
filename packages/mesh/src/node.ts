@@ -261,7 +261,7 @@ export function createNode(config: MeshNodeConfig): MeshNode {
       transport.send(peerId, encoded).then(() => 1 as const).catch(() => 0 as const),
     );
 
-    return Promise.all(sends).then((results) => results.reduce((a, b) => a + b, 0));
+    return Promise.all(sends).then((results) => results.reduce<number>((a, b) => a + b, 0));
   }
 
   function request(hash: string): Promise<DOT | null> {

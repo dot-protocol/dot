@@ -285,7 +285,7 @@ export class WSTransport implements Transport {
               peerId,
               missedPongs: 0,
               reconnectAddress: address,
-              reconnectAttempts: existingState?.reconnectAttempts ?? 0,
+              reconnectAttempts: 0,
               reconnecting: false,
             };
 
