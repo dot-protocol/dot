@@ -84,7 +84,7 @@ export function checkCommand(filePath: string): string {
       lines.push(`WARN  ${filePath}`);
     }
     for (const w of result.warnings) {
-      lines.push(`  warn   ${w.line}:${w.column}  ${w.message}`);
+      lines.push(`  warn   ${w}`);
     }
   }
 
