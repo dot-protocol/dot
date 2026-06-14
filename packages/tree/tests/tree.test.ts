@@ -442,8 +442,9 @@ describe('verifyTree', () => {
     const tree = await createTree();
     // Tamper a root DOT signature
     const root = tree.roots.get('observe')!;
-    if (root.dot.sign?.signature) {
-      root.dot.sign.signature[0] ^= 0xff; // flip first byte
+    const signature = root.dot.sign?.signature;
+    if (signature && signature.length > 0) {
+      signature[0] = signature[0]! ^ 0xff; // flip first byte
     }
     const result = await verifyTree(tree);
     expect(result.valid).toBe(false);
