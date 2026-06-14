@@ -21,6 +21,17 @@ export interface PhishingResult {
   reasons: string[];
 }
 
+const RISK_ORDER: Record<PhishingRisk, number> = {
+  none: 0,
+  low: 1,
+  medium: 2,
+  high: 3,
+};
+
+function escalateRisk(current: PhishingRisk, candidate: PhishingRisk): PhishingRisk {
+  return RISK_ORDER[candidate] > RISK_ORDER[current] ? candidate : current;
+}
+
 /**
  * Checks a DOT for phishing risk signals.
  *
@@ -47,22 +58,22 @@ export function checkPhishing(dot: DOT): PhishingResult {
   // Rule 2: Ephemeral identity → medium risk (only escalate, never downgrade)
   if (dot.sign?.level === 'ephemeral') {
     reasons.push('Ephemeral identity — observer is not persistent');
-    if (risk === 'none' || risk === 'low') risk = 'medium';
+    risk = escalateRisk(risk, 'medium');
   }
 
   // Rule 3: No chain base → medium risk
   if (dot.chain === undefined) {
     reasons.push('No chain base — observation has no causal history');
-    if (risk === 'none' || risk === 'low') risk = 'medium';
+    risk = escalateRisk(risk, 'medium');
   } else {
     // Rule 4: Genesis DOT (depth 0) → medium risk
     if ((dot.chain.depth ?? 0) === 0) {
       reasons.push('Chain depth 0 — genesis observation, no established history');
-      if (risk === 'none' || risk === 'low') risk = 'medium';
+      risk = escalateRisk(risk, 'medium');
     } else if ((dot.chain.depth ?? 0) < 5) {
       // Rule 5: Very shallow chain → low risk
       reasons.push(`Chain depth ${dot.chain.depth} — shallow history (< 5)`);
-      if (risk === 'none') risk = 'low';
+      risk = escalateRisk(risk, 'low');
     }
   }
 
