@@ -5,13 +5,14 @@
  * and that the glue code is valid JS for embedding.
  */
 
-import { describe, it, expect } from 'vitest';
+import { it, expect } from 'vitest';
 import {
   getWasmBase64,
   getWasmGlue,
   getWasmSize,
   getWasmBase64Size,
 } from '../src/wasm-loader.js';
+import { describeIfWasmArtifacts as describe } from './wasm-artifacts.js';
 
 // ── getWasmBase64() ───────────────────────────────────────────────────────
 

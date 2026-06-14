@@ -9,12 +9,13 @@
  * - WASM init code present
  */
 
-import { describe, it, expect } from 'vitest';
+import { it, expect } from 'vitest';
 import { generateSingleFile } from '../src/single-file.js';
 import { getWasmSize } from '../src/wasm-loader.js';
 import { mkdtempSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
+import { describeIfWasmArtifacts as describe } from './wasm-artifacts.js';
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
