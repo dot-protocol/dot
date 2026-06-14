@@ -162,7 +162,7 @@ export class EphemeralManager {
     const ciphertext = await crypto.subtle.encrypt(
       { name: 'AES-GCM', iv },
       aesKey,
-      payload,
+      toArrayBuffer(payload),
     );
 
     // Package: IV (12 bytes) || ciphertext
@@ -226,7 +226,7 @@ export class EphemeralManager {
 
       const aesKey = await crypto.subtle.importKey(
         'raw',
-        keyBytes,
+        toArrayBuffer(keyBytes),
         { name: 'AES-GCM', length: AES_KEY_LENGTH },
         false,
         ['decrypt'],
@@ -235,7 +235,7 @@ export class EphemeralManager {
       const plaintext = await crypto.subtle.decrypt(
         { name: 'AES-GCM', iv },
         aesKey,
-        ciphertext,
+        toArrayBuffer(ciphertext),
       );
 
       return new Uint8Array(plaintext);
@@ -317,4 +317,8 @@ function generateKeyId(): string {
   return Array.from(bytes)
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
+}
+
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  return new Uint8Array(bytes).buffer as ArrayBuffer;
 }
