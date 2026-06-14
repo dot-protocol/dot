@@ -322,9 +322,10 @@ describe('lexer.dot', () => {
   it('is an AgentStatement named lexer', () => {
     const { ast } = pipeline(PROGRAMS.lexerDot);
     const agent = ast.body[0];
-    expect(agent?.type).toBe('AgentStatement');
-    // @ts-expect-error — accessing typed property
-    expect(agent?.name).toBe('lexer');
+    if (agent?.type !== 'AgentStatement') {
+      throw new Error('expected lexer.dot to parse as an AgentStatement');
+    }
+    expect(agent.name).toBe('lexer');
   });
 
   it('compiles to TypeScript', () => {
