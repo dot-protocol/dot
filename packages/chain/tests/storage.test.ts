@@ -3,7 +3,7 @@
  * Target: 20+ tests per backend.
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { observe, toBytes, fromBytes } from '@dot-protocol/core';
 import type { DOT } from '@dot-protocol/core';
 import { MemoryStorage } from '../src/storage/memory.js';
