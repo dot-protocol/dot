@@ -12,7 +12,7 @@
  *   npx tsx scripts/train-dictionary.ts --profile kulhadVoltage --count 1000 --batch-size 100
  */
 
-import { createHash, gzipSync } from 'node:zlib';
+import { gzipSync } from 'node:zlib';
 import { createHash as cryptoHash } from 'node:crypto';
 import { createKeypair, createBLSKeypair } from '@dot-protocol/core';
 import { generateSensorStream, type SensorProfile } from '../src/sample-generator.js';
