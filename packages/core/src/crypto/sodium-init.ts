@@ -24,6 +24,10 @@ const sodiumLib = _require('libsodium-wrappers-sumo') as {
     privateKey: Uint8Array;
     keyType: string;
   };
+  crypto_sign_seed_keypair(seed: Uint8Array): {
+    publicKey: Uint8Array;
+    privateKey: Uint8Array;
+  };
   crypto_sign_detached(
     message: Uint8Array | string,
     secretKey: Uint8Array,
@@ -34,6 +38,27 @@ const sodiumLib = _require('libsodium-wrappers-sumo') as {
     publicKey: Uint8Array,
   ): boolean;
   crypto_sign_ed25519_sk_to_pk(secretKey: Uint8Array): Uint8Array;
+  crypto_kx_keypair(): {
+    publicKey: Uint8Array;
+    privateKey: Uint8Array;
+  };
+  crypto_scalarmult(secretKey: Uint8Array, publicKey: Uint8Array): Uint8Array;
+  crypto_kdf_derive_from_key(
+    subkeyLength: number,
+    subkeyId: number,
+    context: string,
+    masterKey: Uint8Array,
+  ): Uint8Array;
+  crypto_secretbox_easy(
+    message: Uint8Array,
+    nonce: Uint8Array,
+    key: Uint8Array,
+  ): Uint8Array;
+  crypto_secretbox_open_easy(
+    ciphertext: Uint8Array,
+    nonce: Uint8Array,
+    key: Uint8Array,
+  ): Uint8Array | null | false;
   randombytes_buf(n: number): Uint8Array;
 };
 

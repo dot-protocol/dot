@@ -215,7 +215,7 @@ describe('DOTSealHandshake.respond', () => {
 
     // Flip a byte in the trust proof
     const badProof = new Uint8Array(msg.trustProof);
-    badProof[0] ^= 0xff;
+    badProof[0] = badProof[0]! ^ 0xff;
     const tampered = { ...msg, trustProof: badProof };
 
     const bobHs = new DOTSealHandshake();

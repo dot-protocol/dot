@@ -75,7 +75,7 @@ describe('encrypt/decrypt', () => {
     const plaintext = new TextEncoder().encode('sensitive data');
     const ciphertext = await ch.encrypt(plaintext);
     // Flip a byte in the message body (after nonce)
-    ciphertext[30] ^= 0xff;
+    ciphertext[30] = ciphertext[30]! ^ 0xff;
     await expect(ch.decrypt(ciphertext)).rejects.toThrow();
   });
 
@@ -84,7 +84,7 @@ describe('encrypt/decrypt', () => {
     const plaintext = new TextEncoder().encode('test');
     const ciphertext = await ch.encrypt(plaintext);
     // Flip a byte in the nonce
-    ciphertext[0] ^= 0x01;
+    ciphertext[0] = ciphertext[0]! ^ 0x01;
     await expect(ch.decrypt(ciphertext)).rejects.toThrow();
   });
 
