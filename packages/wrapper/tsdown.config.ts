@@ -6,6 +6,7 @@ export default defineConfig({
   dts: true,
   clean: true,
   outDir: 'dist',
-  platform: 'neutral',
+  platform: 'node',
+  fixedExtension: false,
   sourcemap: true,
 })
