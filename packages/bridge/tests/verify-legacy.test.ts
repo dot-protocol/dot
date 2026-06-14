@@ -54,7 +54,7 @@ describe('verifyLegacy — single DOT', () => {
     const dot = readLegacyDOTRaw(raw);
     // Directly tamper the signature in the parsed struct
     const badSig = new Uint8Array(dot.signature);
-    badSig[0] ^= 0xFF;
+    badSig[0]! ^= 0xFF;
     const tamperedDot: LegacyDOT = { ...dot, signature: badSig };
     expect(await verifyLegacy(tamperedDot)).toBe(false);
   });
@@ -63,7 +63,7 @@ describe('verifyLegacy — single DOT', () => {
     const raw = await buildLegacyDOT(kp);
     const dot = readLegacyDOTRaw(raw);
     const badPub = new Uint8Array(dot.pubkey);
-    badPub[0] ^= 0xFF;
+    badPub[0]! ^= 0xFF;
     const tamperedDot: LegacyDOT = { ...dot, pubkey: badPub };
     expect(await verifyLegacy(tamperedDot)).toBe(false);
   });
