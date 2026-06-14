@@ -29,4 +29,4 @@ Use `packages/selfhost/programs/temperature.dot` from the main repo.
 
 - Repository: https://github.com/dot-protocol/dot
 - Spec: The DOT language has 4 bases (STCV), 7 functions, 5 observation types
-- 3,048+ tests, Apache-2.0 licensed
+- 4,099 TypeScript tests, Apache-2.0 licensed

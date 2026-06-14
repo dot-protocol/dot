@@ -8,7 +8,7 @@ Every contribution is a DOT. Every commit is an observation.
 git clone https://github.com/dot-protocol/dot
 cd dot
 pnpm install
-pnpm test        # 3,048 TypeScript tests
+pnpm test        # 4,099 TypeScript tests; 60 WASM-artifact-gated skips
 cargo test       # 275 Rust tests
 ```
 

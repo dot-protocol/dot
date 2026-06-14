@@ -18,7 +18,7 @@ npm install @dot-protocol/chat      # group chat on DOT chains
 git clone https://github.com/dot-protocol/dot
 cd dot
 pnpm install
-pnpm test        # 3,048 TypeScript tests
+pnpm test        # 4,099 TypeScript tests; 60 WASM-artifact-gated skips
 cargo test       # 275 Rust tests
 ```
 
@@ -150,7 +150,7 @@ checkAutoEmit(myChain); // call after each append
 ## Run tests
 
 ```bash
-pnpm test        # all TypeScript (vitest, ~3,048 tests)
+pnpm test        # all TypeScript (vitest, 4,099 passing tests; 60 WASM-artifact-gated skips)
 cargo test       # all Rust (275 tests)
 pnpm run build   # compile all packages
 pnpm run lint    # TypeScript type check only
