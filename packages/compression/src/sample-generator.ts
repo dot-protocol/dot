@@ -69,7 +69,7 @@ function gpsPayload(i: number, baseTs: bigint): { payload: Uint8Array; ts: bigin
 /**
  * Generate an array of `count` properly-signed 153-byte DOT Uint8Arrays
  * according to the given sensor profile. DOTs form a valid chain (each DOT's
- * chain hash = SHA-256 of previous DOT bytes; genesis chain hash = 32 zeros).
+ * chain hash = BLAKE3 of previous DOT bytes; genesis chain hash = 32 zeros).
  */
 export async function generateSensorStream(
   options: SampleGeneratorOptions

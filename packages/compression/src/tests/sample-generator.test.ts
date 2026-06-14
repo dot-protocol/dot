@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { fromBytes, hash, type DOT } from '@dot-protocol/core';
 import { generateSensorStream, generateTrainingSamples, SensorProfile } from '../sample-generator.js';
 
 const PROFILES: SensorProfile[] = ['kulhadVoltage', 'temperature', 'gps', 'random'];
@@ -8,10 +9,6 @@ const PROFILES: SensorProfile[] = ['kulhadVoltage', 'temperature', 'gps', 'rando
 function readFloat32LE(buf: Uint8Array, offset: number): number {
   const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
   return view.getFloat32(offset, true);
-}
-
-function sha256(data: Uint8Array): Promise<Uint8Array> {
-  return crypto.subtle.digest('SHA-256', data).then(b => new Uint8Array(b));
 }
 
 // ─── Tests ────────────────────────────────────────────────────────────────────
@@ -30,14 +27,14 @@ describe('generateSensorStream', () => {
 
   it('chain hash of dot[0] is 32 zero bytes (genesis)', async () => {
     const dots = await generateSensorStream({ count: 5, profile: 'kulhadVoltage' });
-    const chainHash0 = dots[0].slice(96, 128);
+    const chainHash0 = dots[0]!.slice(96, 128);
     expect(chainHash0.every(b => b === 0)).toBe(true);
   });
 
-  it('chain hash of dot[1] equals SHA-256(dot[0])', async () => {
+  it('chain hash of dot[1] equals BLAKE3(dot[0])', async () => {
     const dots = await generateSensorStream({ count: 5, profile: 'kulhadVoltage' });
-    const expected = await sha256(dots[0]);
-    const actual = dots[1].slice(96, 128);
+    const expected = hash(fromBytes(dots[0]!) as DOT);
+    const actual = dots[1]!.slice(96, 128);
     expect(actual).toEqual(expected);
   });
 
@@ -108,7 +105,7 @@ describe('generateSensorStream', () => {
   it('respects startTimestamp option', async () => {
     const startTs = 1_700_000_000_000n;
     const dots = await generateSensorStream({ count: 3, profile: 'temperature', startTimestamp: startTs });
-    const view = new DataView(dots[0].buffer, dots[0].byteOffset, dots[0].byteLength);
+    const view = new DataView(dots[0]!.buffer, dots[0]!.byteOffset, dots[0]!.byteLength);
     const ts0 = view.getBigUint64(128, false);
     expect(ts0).toBeGreaterThanOrEqual(startTs);
   });
