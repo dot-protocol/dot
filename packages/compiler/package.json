@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/compiler/tests",
+    "test:watch": "vitest --root ../.. packages/compiler/tests"
   },
   "devDependencies": {
     "typescript": "^5.8.0",
