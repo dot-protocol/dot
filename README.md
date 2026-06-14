@@ -83,7 +83,7 @@ The language compiles to TypeScript and English. Rust and WASM run the crypto in
 
 ## What's Inside
 
-22 packages. 3,048 tests. 58K lines. TypeScript + Rust + WASM.
+33 packages. 4,099 passing TypeScript tests. 83K TypeScript/Rust lines. TypeScript + Rust + WASM.
 
 ### The Protocol
 
@@ -144,8 +144,8 @@ Open `packages/first-room/index.html` in a browser. You're in.
 git clone https://github.com/dot-protocol/dot
 cd dot
 pnpm install
-pnpm test        # 3,048 tests
-cargo test       # 275 Rust tests
+pnpm test        # 4,099 passing tests; 60 WASM-artifact-gated skips
+cargo test       # 275 Rust test annotations
 ```
 
 ---
@@ -158,7 +158,7 @@ Three credible systems occupy similar territory. Here is an honest comparison.
 
 Provara is the closest parallel: Ed25519+SHA-256 signatures, Merkle chaining, append-only NDJSON, self-described as "sovereign tamper-evident memory for AI agents", approximately 110 tests.
 
-dot's differences: BLAKE3 over SHA-256 (faster, DoS-resistant), the STCV object model (all four bases — Sign, Time, Chain, Verify — optional and composable rather than a fixed binary header), and 22 packages covering the full stack from crypto kernel to group chat, language compiler, and WASM browser bundle. Provara is purpose-built for agent memory logs; dot is a composable substrate that memory logs, messaging, geo-location, reputation, and commerce build on the same primitive.
+dot's differences: BLAKE3 over SHA-256 (faster, DoS-resistant), the STCV object model (all four bases — Sign, Time, Chain, Verify — optional and composable rather than a fixed binary header), and 33 packages covering the full stack from crypto kernel to group chat, language compiler, and WASM browser bundle. Provara is purpose-built for agent memory logs; dot is a composable substrate that memory logs, messaging, geo-location, reputation, and commerce build on the same primitive.
 
 ### VIRP (IETF draft-howard-virp-03)
 
