@@ -48,7 +48,7 @@ export async function reportQuality(
 ): Promise<{ session: CallSession; dot: DOT }> {
   const observer = pubkeyHex(identity.publicKey);
   const envelope: SignalPayloadEnvelope = {
-    kind: 'call-start' as never, // reusing event type; kind='quality-report' stored in data
+    kind: 'quality-report',
     observer,
     data: {
       qualityReport: true,
@@ -59,8 +59,6 @@ export async function reportQuality(
       timestamp: Date.now(),
     },
   };
-  // Override kind with quality-report
-  (envelope as Record<string, unknown>).kind = 'quality-report';
 
   const unsigned = observe(envelope, { type: 'measure', plaintext: true });
   const dot = await sign(unsigned, identity.secretKey);

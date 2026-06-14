@@ -63,7 +63,8 @@ export type SignalDOTType =
   | 'mute'
   | 'unmute'
   | 'video-on'
-  | 'video-off';
+  | 'video-off'
+  | 'quality-report';
 
 /** Payload shape for an SDP offer or answer DOT. */
 export interface SDPPayload {

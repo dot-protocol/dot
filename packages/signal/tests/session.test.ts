@@ -25,7 +25,8 @@ function pubkeyHex(pk: Uint8Array): string {
 function decodeFirstPayload(session: CallSession): Record<string, unknown> | null {
   const dots = walk(session.chain);
   if (dots.length === 0) return null;
-  const dot = dots[0];
+  const [dot] = dots;
+  if (dot === undefined) return null;
   if (!dot.payload) return null;
   return JSON.parse(new TextDecoder().decode(dot.payload));
 }
@@ -84,9 +85,9 @@ describe('startCall', () => {
 
   it('the genesis DOT is signed by the caller', async () => {
     const session = await startCall(identity, 'voice');
-    const dots = walk(session.chain);
-    expect(dots[0].sign?.observer).toBeDefined();
-    expect(Buffer.from(dots[0].sign!.observer!).toString('hex')).toBe(
+    const [dot] = walk(session.chain);
+    expect(dot?.sign?.observer).toBeDefined();
+    expect(Buffer.from(dot?.sign?.observer ?? new Uint8Array()).toString('hex')).toBe(
       pubkeyHex(identity.publicKey),
     );
   });

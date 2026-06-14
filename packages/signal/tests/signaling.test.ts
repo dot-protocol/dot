@@ -184,7 +184,7 @@ describe('getOffersForPeer', () => {
     const { session: updated } = await sendOffer(session, FAKE_SDP_OFFER, pubkeyHex(callee.publicKey), caller);
     const offers = getOffersForPeer(updated, pubkeyHex(callee.publicKey));
     expect(offers).toHaveLength(1);
-    expect(offers[0].sdp).toBe(FAKE_SDP_OFFER);
+    expect(offers[0]?.sdp).toBe(FAKE_SDP_OFFER);
   });
 
   it('returns only offers for the specified peer', async () => {
@@ -209,7 +209,7 @@ describe('getOffersForPeer', () => {
   it('offer type is always "offer"', async () => {
     const { session: updated } = await sendOffer(session, FAKE_SDP_OFFER, pubkeyHex(callee.publicKey), caller);
     const offers = getOffersForPeer(updated, pubkeyHex(callee.publicKey));
-    expect(offers[0].type).toBe('offer');
+    expect(offers[0]?.type).toBe('offer');
   });
 });
 
@@ -237,7 +237,7 @@ describe('getAnswersForPeer', () => {
     const { session: updated } = await sendAnswer(session, FAKE_SDP_ANSWER, pubkeyHex(caller.publicKey), callee);
     const answers = getAnswersForPeer(updated, pubkeyHex(caller.publicKey));
     expect(answers).toHaveLength(1);
-    expect(answers[0].sdp).toBe(FAKE_SDP_ANSWER);
+    expect(answers[0]?.sdp).toBe(FAKE_SDP_ANSWER);
   });
 
   it('offer → answer flow: chain contains both', async () => {
@@ -254,7 +254,7 @@ describe('getAnswersForPeer', () => {
   it('answer type is always "answer"', async () => {
     const { session: updated } = await sendAnswer(session, FAKE_SDP_ANSWER, pubkeyHex(caller.publicKey), callee);
     const answers = getAnswersForPeer(updated, pubkeyHex(caller.publicKey));
-    expect(answers[0].type).toBe('answer');
+    expect(answers[0]?.type).toBe('answer');
   });
 });
 
@@ -282,7 +282,7 @@ describe('getICECandidatesForPeer', () => {
     const { session: updated } = await sendICECandidate(session, FAKE_ICE, 0, pubkeyHex(callee.publicKey), caller);
     const candidates = getICECandidatesForPeer(updated, pubkeyHex(callee.publicKey));
     expect(candidates).toHaveLength(1);
-    expect(candidates[0].candidate).toBe(FAKE_ICE);
+    expect(candidates[0]?.candidate).toBe(FAKE_ICE);
   });
 
   it('returns multiple ICE candidates for the same peer (trickle ICE)', async () => {
@@ -291,8 +291,8 @@ describe('getICECandidatesForPeer', () => {
     const { session: s3 } = await sendICECandidate(s2, ICE_2, 0, pubkeyHex(callee.publicKey), caller);
     const candidates = getICECandidatesForPeer(s3, pubkeyHex(callee.publicKey));
     expect(candidates).toHaveLength(2);
-    expect(candidates[0].candidate).toBe(FAKE_ICE);
-    expect(candidates[1].candidate).toBe(ICE_2);
+    expect(candidates[0]?.candidate).toBe(FAKE_ICE);
+    expect(candidates[1]?.candidate).toBe(ICE_2);
   });
 
   it('only returns candidates for the specified peer', async () => {
