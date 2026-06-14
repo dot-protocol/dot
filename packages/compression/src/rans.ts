@@ -58,7 +58,8 @@ export function buildFrequencyTable(data: Uint8Array): FrequencyTable {
   // Step 1: raw counts
   const rawCounts = new Float64Array(256);
   for (let i = 0; i < data.length; i++) {
-    rawCounts[data[i]!]++;
+    const byte = data[i]!;
+    rawCounts[byte] = rawCounts[byte]! + 1;
   }
 
   // Step 2: Laplace smoothing — every symbol gets at least 1 count
@@ -91,8 +92,8 @@ export function buildFrequencyTable(data: Uint8Array): FrequencyTable {
     const indices = Array.from({ length: 256 }, (_, i) => i);
     indices.sort((a, b) => remainders[b]! - remainders[a]!);
     for (let k = 0; k < delta; k++) {
-      freq[indices[k % 256]!]! + 1; // suppress lint
-      freq[indices[k % 256]!] += 1;
+      const idx = indices[k % 256]!;
+      freq[idx] = freq[idx]! + 1;
     }
   } else if (delta < 0) {
     // Over-allocated: remove slots from largest frequencies (keep min=1)
@@ -103,7 +104,7 @@ export function buildFrequencyTable(data: Uint8Array): FrequencyTable {
     while (toRemove > 0) {
       const idx = indices[k % 256]!;
       if (freq[idx]! > 1) {
-        freq[idx] -= 1;
+        freq[idx] = freq[idx]! - 1;
         toRemove--;
       }
       k++;

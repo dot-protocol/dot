@@ -160,7 +160,8 @@ describe('batch v2 serializer', () => {
 
     // Tamper a byte in the payload section (last 160 bytes of the frame)
     const tampered = frame.slice();
-    tampered[tampered.length - 5] ^= 0xff;
+    const tamperOffset = tampered.length - 5;
+    tampered[tamperOffset] = tampered[tamperOffset]! ^ 0xff;
 
     await expect(deserializeBatchV2(tampered, blsKeypair.publicKey)).rejects.toThrow(
       'BLS aggregate signature verification failed',

@@ -753,7 +753,7 @@ export async function deserializeBatchV2(
   // Sprint 1 limitation: genesis-anchored batch — chain[0] = 32 zero bytes.
   const zeroedSig = new Uint8Array(SIG_SIZE); // 64 zero bytes
   const blsFormDots: Uint8Array[] = new Array(dotCount);
-  let prevChain = new Uint8Array(CHAIN_SIZE); // 32 zeros = genesis chain
+  let prevChain: Uint8Array = new Uint8Array(CHAIN_SIZE); // 32 zeros = genesis chain
 
   for (let i = 0; i < dotCount; i++) {
     const dot = new Uint8Array(DOT_SIZE);

@@ -29,15 +29,15 @@ describe('weissmanScore()', () => {
 
 describe('WEISSMAN_PRESETS', () => {
   it('gzip preset has weissmanScore of exactly 1.0 (reference baseline)', () => {
-    expect(WEISSMAN_PRESETS.gzip.weissmanScore).toBe(1.0);
+    expect(WEISSMAN_PRESETS.gzip!.weissmanScore).toBe(1.0);
   });
 
   it('dotPhase2DictLarge has bytesPerDot < 5 (best measured level)', () => {
-    expect(WEISSMAN_PRESETS.dotPhase2DictLarge.bytesPerDot).toBeLessThan(5);
+    expect(WEISSMAN_PRESETS.dotPhase2DictLarge!.bytesPerDot).toBeLessThan(5);
   });
 
   it('dotBLSBatch weissmanScore ≈ 2.459 (Phase 1.5 published result)', () => {
-    expect(WEISSMAN_PRESETS.dotBLSBatch.weissmanScore).toBeCloseTo(2.459, 2);
+    expect(WEISSMAN_PRESETS.dotBLSBatch!.weissmanScore).toBeCloseTo(2.459, 2);
   });
 
   it('all presets have compressionRatio > 0', () => {
@@ -60,7 +60,7 @@ describe('WEISSMAN_PRESETS', () => {
   });
 
   it('Phase 2 dictionary preset outperforms plain preset', () => {
-    expect(WEISSMAN_PRESETS.dotPhase2Dict.weissmanScore)
-      .toBeGreaterThan(WEISSMAN_PRESETS.dotPhase2Plain.weissmanScore);
+    expect(WEISSMAN_PRESETS.dotPhase2Dict!.weissmanScore)
+      .toBeGreaterThan(WEISSMAN_PRESETS.dotPhase2Plain!.weissmanScore);
   });
 });
