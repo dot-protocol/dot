@@ -53,6 +53,30 @@ async function makeClientServer(): Promise<{
   };
 }
 
+function toolText(result: unknown): string {
+  if (typeof result !== 'object' || result === null) {
+    throw new Error('Expected tool result to be an object');
+  }
+
+  const { content } = result as { content?: unknown };
+  if (!Array.isArray(content)) {
+    throw new Error('Expected tool result to contain content array');
+  }
+
+  const first = content[0] as unknown;
+  if (typeof first !== 'object' || first === null) {
+    throw new Error('Expected first tool content item to be an object');
+  }
+
+  const item = first as { type?: unknown; text?: unknown };
+  expect(item.type).toBe('text');
+  if (typeof item.text !== 'string') {
+    throw new Error('Expected first tool content item to contain text');
+  }
+
+  return item.text;
+}
+
 // ---------------------------------------------------------------------------
 // Reset runtime before each test
 // ---------------------------------------------------------------------------
@@ -145,7 +169,7 @@ describe('SDK server: dot_boot', () => {
     try {
       const result = await client.callTool({ name: 'dot_boot', arguments: {} });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['publicKey']).toBe('string');
       expect((parsed['publicKey'] as string)).toHaveLength(64);
@@ -158,7 +182,7 @@ describe('SDK server: dot_boot', () => {
     const { client, cleanup } = await makeClientServer();
     try {
       const result = await client.callTool({ name: 'dot_boot', arguments: {} });
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['chainDepth']).toBe('number');
       expect(parsed['chainDepth'] as number).toBeGreaterThanOrEqual(1);
@@ -171,7 +195,7 @@ describe('SDK server: dot_boot', () => {
     const { client, cleanup } = await makeClientServer();
     try {
       const result = await client.callTool({ name: 'dot_boot', arguments: {} });
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(parsed['bootTimeMs'] as number).toBeGreaterThanOrEqual(0);
     } finally {
@@ -194,7 +218,7 @@ describe('SDK server: dot_observe', () => {
         arguments: { payload: 'temperature=82.3', type: 'measure' },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['hash']).toBe('string');
       expect((parsed['hash'] as string).length).toBeGreaterThan(0);
@@ -221,7 +245,7 @@ describe('SDK server: dot_compile', () => {
         arguments: { source: 'observe temperature at sensor(7) = 82.3' },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['typescript']).toBe('string');
       expect((parsed['typescript'] as string).length).toBeGreaterThan(0);
@@ -238,7 +262,7 @@ describe('SDK server: dot_compile', () => {
         name: 'dot_compile',
         arguments: { source: 'observe temperature at sensor(7) = 82.3' },
       });
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(parsed['typescript'] as string).toContain('@dot-protocol/core');
     } finally {
@@ -254,7 +278,7 @@ describe('SDK server: dot_compile', () => {
         arguments: { source: '@@@ invalid %%%' },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect((parsed['errors'] as unknown[]).length).toBeGreaterThan(0);
     } finally {
@@ -276,7 +300,7 @@ describe('SDK server: dot_verify', () => {
         name: 'dot_observe',
         arguments: { payload: 'ping', type: 'event' },
       });
-      const obsText = (obs.content[0] as { type: string; text: string }).text;
+      const obsText = toolText(obs);
       const { dotBytes } = JSON.parse(obsText) as Record<string, unknown>;
 
       const result = await client.callTool({
@@ -284,7 +308,7 @@ describe('SDK server: dot_verify', () => {
         arguments: { dotBytes },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(parsed['valid']).toBe(true);
       expect(Array.isArray(parsed['checked'])).toBe(true);
@@ -306,7 +330,7 @@ describe('SDK server: dot_health', () => {
     try {
       const result = await client.callTool({ name: 'dot_health', arguments: {} });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(parsed['runtimeReady']).toBe(false);
     } finally {
@@ -320,7 +344,7 @@ describe('SDK server: dot_health', () => {
       await client.callTool({ name: 'dot_boot', arguments: {} });
       const result = await client.callTool({ name: 'dot_health', arguments: {} });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(parsed['runtimeReady']).toBe(true);
       expect(typeof parsed['dotsCreated']).toBe('number');
@@ -341,7 +365,7 @@ describe('SDK server: dot_chain', () => {
       await client.callTool({ name: 'dot_boot', arguments: {} });
       const result = await client.callTool({ name: 'dot_chain', arguments: {} });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['depth']).toBe('number');
       expect((parsed['depth'] as number)).toBeGreaterThanOrEqual(1);
@@ -368,7 +392,7 @@ describe('SDK server: dot_sign', () => {
         arguments: { payload: 'hello dot', type: 'claim' },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect((parsed['signature'] as string)).toHaveLength(128);
       expect(parsed['signature'] as string).toMatch(/^[0-9a-f]+$/);
@@ -392,7 +416,7 @@ describe('SDK server: dot_trust', () => {
         arguments: { payload: 'sensor=42', type: 'measure' },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['trust']).toBe('number');
       expect((parsed['trust'] as number)).toBeGreaterThan(0);
@@ -418,7 +442,7 @@ describe('SDK server: dot_explain', () => {
         arguments: { source: 'observe temperature at sensor(7) = 82.3' },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['english']).toBe('string');
       expect((parsed['english'] as string).toLowerCase()).toContain('temperature');
@@ -442,7 +466,7 @@ describe('SDK server: dot_execute', () => {
         arguments: { source: 'observe temperature at sensor(7) = 82.3' },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       expect(typeof parsed['typescript']).toBe('string');
       expect((parsed['typescript'] as string).length).toBeGreaterThan(0);
@@ -476,7 +500,7 @@ describe('SDK server: dot_bridge', () => {
         arguments: { legacyDot },
       });
       expect(result.isError).toBeFalsy();
-      const text = (result.content[0] as { type: string; text: string }).text;
+      const text = toolText(result);
       const parsed = JSON.parse(text) as Record<string, unknown>;
       const converted = parsed['converted'] as Record<string, unknown>;
       expect(converted['type']).toBe('event');
@@ -528,9 +552,7 @@ describe('SDK server: full sequence test', () => {
       // Boot
       const bootResult = await client.callTool({ name: 'dot_boot', arguments: {} });
       expect(bootResult.isError).toBeFalsy();
-      const bootParsed = JSON.parse(
-        (bootResult.content[0] as { type: string; text: string }).text,
-      ) as Record<string, unknown>;
+      const bootParsed = JSON.parse(toolText(bootResult)) as Record<string, unknown>;
       expect((bootParsed['chainDepth'] as number)).toBeGreaterThanOrEqual(1);
 
       // Observe
@@ -539,16 +561,12 @@ describe('SDK server: full sequence test', () => {
         arguments: { payload: 'sequence test', type: 'state' },
       });
       expect(obsResult.isError).toBeFalsy();
-      const { dotBytes, trust } = JSON.parse(
-        (obsResult.content[0] as { type: string; text: string }).text,
-      ) as Record<string, unknown>;
+      const { dotBytes, trust } = JSON.parse(toolText(obsResult)) as Record<string, unknown>;
       expect((trust as number)).toBeGreaterThan(0);
 
       // Chain grows
       const chainResult = await client.callTool({ name: 'dot_chain', arguments: {} });
-      const chainParsed = JSON.parse(
-        (chainResult.content[0] as { type: string; text: string }).text,
-      ) as Record<string, unknown>;
+      const chainParsed = JSON.parse(toolText(chainResult)) as Record<string, unknown>;
       expect((chainParsed['dotCount'] as number)).toBeGreaterThan(1);
 
       // Verify observed DOT
@@ -557,9 +575,7 @@ describe('SDK server: full sequence test', () => {
         arguments: { dotBytes },
       });
       expect(verifyResult.isError).toBeFalsy();
-      const verifyParsed = JSON.parse(
-        (verifyResult.content[0] as { type: string; text: string }).text,
-      ) as Record<string, unknown>;
+      const verifyParsed = JSON.parse(toolText(verifyResult)) as Record<string, unknown>;
       expect(verifyParsed['valid']).toBe(true);
     } finally {
       await cleanup();
