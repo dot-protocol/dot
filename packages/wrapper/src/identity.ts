@@ -30,6 +30,10 @@ function makePkcs8(seed: Uint8Array): ArrayBuffer {
   return pkcs8.buffer as ArrayBuffer;
 }
 
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  return new Uint8Array(bytes).buffer as ArrayBuffer;
+}
+
 function deriveKey(passphrase: string, salt: Buffer): Promise<Buffer> {
   return new Promise<Buffer>((resolve, reject) => {
     pbkdf2(passphrase, salt, 100_000, 32, 'sha256', (err, key) => {
@@ -228,7 +232,7 @@ export async function dotId(options?: IdentityOptions): Promise<DotIdentity> {
     puf: null,
 
     async sign(data: Uint8Array): Promise<Uint8Array> {
-      const sig = await subtle.sign({ name: 'Ed25519' }, signingKey, data);
+      const sig = await subtle.sign({ name: 'Ed25519' }, signingKey, toArrayBuffer(data));
       return new Uint8Array(sig);
     },
 
@@ -241,7 +245,7 @@ export async function dotId(options?: IdentityOptions): Promise<DotIdentity> {
         const keyBytes = publicKey ?? pubKeySnapshot;
         // Always create a fresh ArrayBuffer copy — Node.js Buffer pool means
         // .buffer may be a large shared pool, not the 32-byte key alone.
-        const raw = new Uint8Array(keyBytes).buffer as ArrayBuffer;
+        const raw = toArrayBuffer(keyBytes);
         const verifyKey = await subtle.importKey(
           'raw',
           raw,
@@ -249,7 +253,12 @@ export async function dotId(options?: IdentityOptions): Promise<DotIdentity> {
           false,
           ['verify'],
         );
-        return subtle.verify({ name: 'Ed25519' }, verifyKey, signature, data);
+        return subtle.verify(
+          { name: 'Ed25519' },
+          verifyKey,
+          toArrayBuffer(signature),
+          toArrayBuffer(data),
+        );
       } catch {
         return false;
       }

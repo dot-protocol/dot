@@ -7,6 +7,11 @@ import { wrap, unwrap } from './index.js';
 import { createSession } from './session.js';
 import type { WrapSession, BridgeOptions, BridgeHandle } from './types.js';
 
+type ServerStartupEvents = {
+  once(event: 'error', listener: (error: Error) => void): void;
+  removeListener(event: 'error', listener: (error: Error) => void): void;
+};
+
 // ─── Wire protocol helpers ─────────────────────────────────────────────────────
 
 /**
@@ -131,6 +136,10 @@ function deserializeResponse(data: Uint8Array): {
   const body = data.subarray(offset, offset + bodyLen);
 
   return { status, headers, body };
+}
+
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  return new Uint8Array(bytes).buffer as ArrayBuffer;
 }
 
 // ─── Frame I/O ────────────────────────────────────────────────────────────────
@@ -262,7 +271,7 @@ export async function bridge(options?: BridgeOptions): Promise<BridgeHandle> {
           const fetchResponse = await fetch(targetUrl, {
             method,
             headers,
-            body: body.length > 0 ? body : undefined,
+            body: body.length > 0 ? toArrayBuffer(body) : undefined,
           });
 
           // Read response body
@@ -299,9 +308,10 @@ export async function bridge(options?: BridgeOptions): Promise<BridgeHandle> {
 
   // Start listening
   await new Promise<void>((resolve, reject) => {
-    server.once('error', reject);
+    const serverEvents = server as unknown as ServerStartupEvents;
+    serverEvents.once('error', reject);
     server.listen(port, host, () => {
-      server.removeListener('error', reject);
+      serverEvents.removeListener('error', reject);
       resolve();
     });
   });
@@ -379,4 +389,3 @@ export async function bridgeFetch(
 
   return { status, headers: respHeaders, body: respBody };
 }
-
