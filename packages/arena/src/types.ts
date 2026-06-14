@@ -5,11 +5,11 @@
  * DOTs make claims. Reality signs resolutions. The chain remembers.
  */
 
-import type { DOT } from '@dot-protocol/core';
+import type { LegacyDOT } from '@dot-protocol/core';
 
 /** A prediction DOT — a claim about a future state */
 export interface PredictionDOT {
-  dot: DOT;
+  dot: LegacyDOT;
   domain: string;           // e.g. "prediction", "engineering", "teaching"
   claim: string;            // human-readable claim (stored off-chain)
   expiresAt: number;        // unix ms — when this prediction resolves
@@ -17,7 +17,7 @@ export interface PredictionDOT {
 
 /** A resolution DOT — reality's answer, signed by an oracle key */
 export interface ResolutionDOT {
-  dot: DOT;
+  dot: LegacyDOT;
   predictionRef: Uint8Array;  // SHA-256 of prediction DOT wire bytes
   outcome: boolean;           // true = prediction correct, false = wrong
   evidence?: string;          // optional human-readable evidence pointer

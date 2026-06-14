@@ -2,15 +2,34 @@
  * DOT Protocol v0.3.0 — Arena Elo Engine
  *
  * Per-domain Elo ratings computed from prediction/resolution DOT pairs.
- * Re-exports and extends the @dot-protocol/chain scoring utilities.
  */
 
-import { updateElo, applyEloUpdates, ELO_DEFAULT } from '@dot-protocol/chain';
-import type { EloUpdate } from '@dot-protocol/chain';
 import type { ArenaMatch } from './types.js';
 
-export { updateElo, applyEloUpdates, ELO_DEFAULT };
-export type { EloUpdate };
+export const ELO_DEFAULT = 1500;
+const ELO_K_FACTOR = 32;
+
+export interface EloUpdate {
+  domain: string;
+  correct: boolean;
+}
+
+export function updateElo(current: number, update: EloUpdate): number {
+  const expectedScore = 0.5;
+  const actualScore = update.correct ? 1 : 0;
+  return Math.round(current + ELO_K_FACTOR * (actualScore - expectedScore));
+}
+
+export function applyEloUpdates(
+  existingElo: Map<string, number>,
+  updates: EloUpdate[]
+): Map<string, number> {
+  const next = new Map(existingElo);
+  for (const update of updates) {
+    next.set(update.domain, updateElo(next.get(update.domain) ?? ELO_DEFAULT, update));
+  }
+  return next;
+}
 
 /**
  * Compute Elo deltas for a batch of arena matches.

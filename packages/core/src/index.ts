@@ -28,6 +28,7 @@ export {
   DotType,
   createKeypair,
   createDOT,
+  legacyToBytes,
   verifyDOT,
   checkChain,
   createBLSKeypair,

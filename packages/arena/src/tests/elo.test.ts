@@ -80,11 +80,11 @@ describe('rankLeaderboard', () => {
       { pubkey: 'c', elo: 1400, totalPredictions: 20, correctPredictions: 10 },
     ];
     const board = rankLeaderboard('prediction', entries);
-    expect(board[0].pubkey).toBe('b');
-    expect(board[0].rank).toBe(1);
-    expect(board[1].pubkey).toBe('a');
-    expect(board[2].pubkey).toBe('c');
-    expect(board[2].rank).toBe(3);
+    expect(board[0]!.pubkey).toBe('b');
+    expect(board[0]!.rank).toBe(1);
+    expect(board[1]!.pubkey).toBe('a');
+    expect(board[2]!.pubkey).toBe('c');
+    expect(board[2]!.rank).toBe(3);
   });
 
   it('computes accuracy correctly', () => {
@@ -92,7 +92,7 @@ describe('rankLeaderboard', () => {
       { pubkey: 'x', elo: 1500, totalPredictions: 10, correctPredictions: 7 },
     ];
     const board = rankLeaderboard('d', entries);
-    expect(board[0].accuracy).toBeCloseTo(0.7, 5);
+    expect(board[0]!.accuracy).toBeCloseTo(0.7, 5);
   });
 
   it('accuracy = 0 when totalPredictions = 0', () => {
@@ -100,6 +100,6 @@ describe('rankLeaderboard', () => {
       { pubkey: 'x', elo: 1500, totalPredictions: 0, correctPredictions: 0 },
     ];
     const board = rankLeaderboard('d', entries);
-    expect(board[0].accuracy).toBe(0);
+    expect(board[0]!.accuracy).toBe(0);
   });
 });

@@ -10,8 +10,7 @@
  * before posting its resolution. Only the outcome is verifiable.
  */
 
-import { verifyDOT } from '@dot-protocol/core';
-import { toBytes } from '@dot-protocol/core';
+import { legacyToBytes, verifyDOT } from '@dot-protocol/core';
 import type { PredictionDOT, ResolutionDOT, ArenaMatch, BlindEvalSession } from './types.js';
 
 /**
@@ -44,9 +43,11 @@ export async function resolveSession(
   }
 
   // Verify oracle key matches session's declared oracle
-  const oracleKeyMatches = resolution.dot.pubkey.every(
-    (b, i) => b === session.oracleKey[i]
-  );
+  const oracleKeyMatches = resolution.dot.pubkey.length === session.oracleKey.length
+    && resolution.dot.pubkey.every((b, i) => {
+      const expected = session.oracleKey[i];
+      return expected !== undefined && b === expected;
+    });
   if (!oracleKeyMatches) {
     throw new Error('Resolution DOT pubkey does not match session oracle key');
   }
@@ -79,17 +80,19 @@ export async function resolveSession(
  * Uses SubtleCrypto if available, falls back to a simple XOR fingerprint.
  */
 export async function hashPredictionDOT(prediction: PredictionDOT): Promise<Uint8Array> {
-  const wire = toBytes(prediction.dot);
+  const wire = legacyToBytes(prediction.dot);
 
   if (typeof globalThis.crypto?.subtle?.digest === 'function') {
-    const hash = await globalThis.crypto.subtle.digest('SHA-256', wire);
+    const input = new ArrayBuffer(wire.byteLength);
+    new Uint8Array(input).set(wire);
+    const hash = await globalThis.crypto.subtle.digest('SHA-256', input);
     return new Uint8Array(hash);
   }
 
   // Fallback: XOR fold to 32 bytes (deterministic, not cryptographic)
   const fold = new Uint8Array(32);
   for (let i = 0; i < wire.length; i++) {
-    fold[i % 32] ^= wire[i];
+    fold[i % 32] = (fold[i % 32] ?? 0) ^ (wire[i] ?? 0);
   }
   return fold;
 }

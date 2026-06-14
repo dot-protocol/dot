@@ -67,7 +67,7 @@ describe('resolveSession', () => {
 
     const result = await resolveSession(session, resolution);
     expect(result.matches).toHaveLength(1);
-    expect(result.matches[0].correct).toBe(true);
+    expect(result.matches[0]!.correct).toBe(true);
     expect(result.session.resolvedAt).toBeDefined();
     expect(result.session.resolution).toBeDefined();
   });
