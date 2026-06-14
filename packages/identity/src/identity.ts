@@ -1,9 +1,9 @@
 import { createKeypair, createDOT, DotType, toBytes, fromBytes } from '@dot-protocol/core';
-import type { DOT, Keypair } from '@dot-protocol/core';
+import type { Keypair, LegacyDOT } from '@dot-protocol/core';
 
 export interface Identity {
   keypair: Keypair;
-  genesisDOT: DOT;
+  genesisDOT: LegacyDOT;
   createdAt: number;
 }
 
@@ -38,6 +38,17 @@ function fromHex(hex: string): Uint8Array {
   return bytes;
 }
 
+function isLegacyDOT(value: unknown): value is LegacyDOT {
+  if (typeof value !== 'object' || value === null) return false;
+  const dot = value as Partial<LegacyDOT>;
+  return dot.pubkey instanceof Uint8Array
+    && dot.sig instanceof Uint8Array
+    && dot.chain instanceof Uint8Array
+    && typeof dot.ts === 'bigint'
+    && typeof dot.type === 'number'
+    && dot.payload instanceof Uint8Array;
+}
+
 /**
  * Export identity as hex strings for storage.
  * WARNING: The returned object contains the raw private key as a hex string.
@@ -59,5 +70,8 @@ export async function importIdentity(exported: ExportedIdentity): Promise<Identi
     privateKey: fromHex(exported.privateKey),
   };
   const genesisDOT = fromBytes(fromHex(exported.genesisDOT));
+  if (!isLegacyDOT(genesisDOT)) {
+    throw new Error('exported genesisDOT is not a legacy DOT');
+  }
   return { keypair, genesisDOT, createdAt: exported.createdAt };
 }
