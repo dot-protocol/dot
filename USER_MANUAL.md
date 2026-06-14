@@ -108,23 +108,39 @@ Every message is a signed DOT. The room chain IS the message history; wherever t
 
 | Package | npm name | Purpose |
 |---------|----------|---------|
-| **core** | `@dot-protocol/core` | observe / sign / verify / chain / hash — the kernel |
-| **chain** | `@dot-protocol/chain` | Merkle DAG, CRDT merge, SQLite + memory storage |
-| **lang** | `@dot-protocol/lang` | Lexer, parser, type checker, codegen (DOT compiles DOT) |
-| **mesh** | `@dot-protocol/mesh` | P2P broadcast over WebSocket, gossip, content routing |
-| **seal** | `@dot-protocol/seal` | Chain-depth trust scoring, X25519 encrypted channels |
-| **sync** | `@dot-protocol/sync` | Multi-device replication, offline queue, ephemeral erasure |
-| **chat** | `@dot-protocol/chat` | Group messaging: threads, reactions, presence |
-| **room** | `@dot-protocol/room` | Everything is a `.room`; chain IS the room |
-| **minds** | `@dot-protocol/minds` | AI minds grounded in primary sources |
-| **signal** | `@dot-protocol/signal` | WebRTC signaling via DOT chain |
-| **tree** | `@dot-protocol/tree` | Knowledge tree: observe → flow → connect |
-| **mcp** | `@dot-protocol/mcp` | 11 MCP tools for Claude Code integration |
-| **browser** | `@dot-protocol/browser` | WASM build, single HTML file, works offline |
+| **arena** | `@dotprotocol/arena` | Elo engine, blind evaluation, and prediction resolution |
 | **bridge** | `@dot-protocol/bridge` | Converts v0.3.0 DOTs to current format |
-| **selfhost** | `@dot-protocol/selfhost` | 7 `.dot` programs implementing the protocol in DOT |
-| **mark** | `@dot-protocol/mark` | DOT-MARK → HTML with trust badges + phishing detection |
+| **browser** | `@dot-protocol/browser` | WASM build, single HTML file, works offline |
+| **chain** | `@dot-protocol/chain` | Merkle DAG, CRDT merge, SQLite + memory storage |
+| **chat** | `@dot-protocol/chat` | Group messaging: threads, reactions, presence |
 | **cli** | `@dot-protocol/cli` | `dot observe`, `dot check`, `dot compile`, `dot explain` |
+| **compiler** | `@dot-protocol/compiler` | DOT compiler package |
+| **compression** | `@dotprotocol/compression` | Stream compression: batch v2, varint, RLE, dictionary, prediction, rANS |
+| **core** | `@dot-protocol/core` | observe / sign / verify / chain / hash — the kernel |
+| **first-room** | `@dot-protocol/first-room` | Browser seed for `.the.first.room` |
+| **fs** | `@dot-protocol/fs` | STCV-aware filesystem layer |
+| **identity** | `@dotprotocol/identity` | Keypair, genesis DOT, export, and import |
+| **kin** | `@dot-protocol/kin` | Kin runtime package |
+| **lang** | `@dot-protocol/lang` | Lexer, parser, type checker, codegen (DOT compiles DOT) |
+| **mark** | `@dot-protocol/mark` | DOT-MARK -> HTML with trust badges + phishing detection |
+| **mcp** | `@dot-protocol/mcp` | 11 MCP tools for Claude Code integration |
+| **mesh** | `@dot-protocol/mesh` | P2P broadcast over WebSocket, gossip, content routing |
+| **minds** | `@dot-protocol/minds` | AI minds grounded in primary sources |
+| **qr** | `@dotprotocol/qr` | QR-DOT encoding for physical objects |
+| **relay** | `@dotprotocol/relay` | CHORUS relay client and server |
+| **room** | `@dot-protocol/room` | Everything is a `.room`; chain IS the room |
+| **room-ai** | `@dot-protocol/room-ai` | Room-level AI coordination |
+| **script** | `@dot-protocol/script` | Reactive DOT scripting runtime |
+| **sdk** | `@dotprotocol/sdk` | One install for signing, compression, wrapping, and identity |
+| **seal** | `@dot-protocol/seal` | Chain-depth trust scoring, X25519 encrypted channels |
+| **selfhost** | `@dot-protocol/selfhost` | 7 `.dot` programs implementing the protocol in DOT |
+| **signal** | `@dot-protocol/signal` | WebRTC signaling via DOT chain |
+| **sync** | `@dot-protocol/sync` | Multi-device replication, offline queue, ephemeral erasure |
+| **transport** | `@dot-protocol/transport` | iroh adapter layer plus memory transport for tests |
+| **tree** | `@dot-protocol/tree` | Knowledge tree: observe -> flow -> connect |
+| **ui** | `@dot-protocol/ui` | Shared DOT UI components |
+| **viewer** | `@dot-protocol/viewer` | DOT viewer package |
+| **wrapper** | `@dotprotocol/wrapper` | Wrap binary protocols as signed, compressed DOT chains |
 
 Rust crates: `dot-core` (Rust kernel, 275 tests), `dot-wasm` (Ed25519 + BLAKE3, 211 KB, runs in any browser).
 
