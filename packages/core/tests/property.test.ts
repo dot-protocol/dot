@@ -7,7 +7,7 @@
  * R854.1 Correction #47: {} is a valid DOT. All STCV bases optional.
  */
 
-import { describe, it, beforeAll } from 'vitest';
+import { describe, it, beforeAll, expect } from 'vitest';
 import * as fc from 'fast-check';
 import {
   observe,
@@ -991,7 +991,7 @@ describe('Property: Chain', () => {
 
   it('depth increases monotonically in a sequential chain', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 2, max: 20 }), (len) => {
+      fc.property(fc.integer({ min: 2, max: 20 }), (len) => {
         let prev: DOT | undefined;
         for (let i = 0; i < len; i++) {
           const dot = observe(`step ${i}`, { plaintext: true }) as DOT;
@@ -1144,7 +1144,7 @@ describe('Property: Chain', () => {
 
   it('chain of signed DOTs all verify correctly', async () => {
     await fc.assert(
-      fc.asyncProperty(fc.nat({ min: 2, max: 10 }), async (len) => {
+      fc.asyncProperty(fc.integer({ min: 2, max: 10 }), async (len) => {
         let prev: DOT | undefined;
         for (let i = 0; i < len; i++) {
           const unsigned = observe(`signed chain ${i}`, { plaintext: true });
