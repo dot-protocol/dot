@@ -269,7 +269,11 @@ describe('hardening — sidecar corruption recovery', () => {
     // Corrupt the sidecar by flipping bytes
     const original = backend.readFile(sp);
     const corrupted = new Uint8Array(original);
-    for (let i = 0; i < corrupted.length; i++) corrupted[i] ^= 0xff;
+    for (let i = 0; i < corrupted.length; i++) {
+      const byte = corrupted[i];
+      if (byte === undefined) throw new Error(`missing byte at ${i}`);
+      corrupted[i] = byte ^ 0xff;
+    }
     backend.writeFile(sp, corrupted);
     // Read should return content (file still there) but unverified
     const result = await dotfs.read('/tamper.txt');
@@ -282,7 +286,11 @@ describe('hardening — sidecar corruption recovery', () => {
     const sp = sidecarPath('/tamper2.txt');
     const corrupted = new Uint8Array(backend.readFile(sp));
     // Corrupt from middle (to preserve length prefix for partial read possibility)
-    for (let i = 4; i < corrupted.length; i++) corrupted[i] ^= 0xaa;
+    for (let i = 4; i < corrupted.length; i++) {
+      const byte = corrupted[i];
+      if (byte === undefined) throw new Error(`missing byte at ${i}`);
+      corrupted[i] = byte ^ 0xaa;
+    }
     backend.writeFile(sp, corrupted);
     const vr = await dotfs.verify('/tamper2.txt');
     expect(vr.valid).toBe(false);
