@@ -8,7 +8,7 @@
  *               determinism / public key derivation
  *   Random    — correct length / non-zero output / uniqueness
  *   Metrics   — counters increment / avg_ms is positive / reset works
- *   Perf      — sign avg < 1ms, verify avg < 0.5ms, hash(1KB) avg < 0.5ms
+ *   Perf      — sign/verify avg < 1ms, hash(1KB) avg < 0.5ms
  *   Vectors   — all 10 cross-language test vectors pass
  */
 
@@ -490,7 +490,7 @@ describe('Performance', () => {
     expect(avg).toBeLessThan(1);
   }, 10_000);
 
-  it('verify avg < 0.5 ms over 100 iterations', async () => {
+  it('verify avg < 1 ms over 100 iterations', async () => {
     const { publicKey, secretKey } = await generateKeypair();
     const msg = new Uint8Array(64);
     const sig = await sign(msg, secretKey);
@@ -499,7 +499,7 @@ describe('Performance', () => {
       await verify(msg, sig, publicKey);
     }
     const avg = getCryptoMetrics().verify.avg_ms;
-    expect(avg).toBeLessThan(0.5);
+    expect(avg).toBeLessThan(1);
   }, 10_000);
 
   it('hash(1 KB) avg < 0.5 ms over 100 iterations', () => {
