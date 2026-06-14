@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --root ../.. packages/first-room/src packages/first-room/tests",
+    "test:watch": "vitest --root ../.. packages/first-room/src packages/first-room/tests",
     "seed": "node --loader ts-node/esm src/seed-runner.ts"
   },
   "dependencies": {

@@ -21,7 +21,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsdown",
-    "test": "vitest run",
+    "test": "vitest run --root ../.. packages/relay/src",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

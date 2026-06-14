@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/room-ai/src packages/room-ai/tests",
+    "test:watch": "vitest --root ../.. packages/room-ai/src packages/room-ai/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",

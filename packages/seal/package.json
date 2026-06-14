@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/seal/src packages/seal/tests",
+    "test:watch": "vitest --root ../.. packages/seal/src packages/seal/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",

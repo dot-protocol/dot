@@ -12,8 +12,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/chain/src packages/chain/tests",
+    "test:watch": "vitest --root ../.. packages/chain/src packages/chain/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",

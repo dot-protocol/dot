@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/chat/src packages/chat/tests",
+    "test:watch": "vitest --root ../.. packages/chat/src packages/chat/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",

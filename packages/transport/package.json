@@ -1,7 +1,7 @@
 {
   "name": "@dot-protocol/transport",
   "version": "1.0.0-alpha.0",
-  "description": "iroh adapter layer — bridges DOT chain semantics to iroh P2P transport (and MemoryTransport for testing).",
+  "description": "iroh adapter layer \u2014 bridges DOT chain semantics to iroh P2P transport (and MemoryTransport for testing).",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -12,8 +12,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/transport/src packages/transport/tests",
+    "test:watch": "vitest --root ../.. packages/transport/src packages/transport/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",

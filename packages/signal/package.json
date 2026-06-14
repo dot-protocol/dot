@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/signal/src packages/signal/tests",
+    "test:watch": "vitest --root ../.. packages/signal/src packages/signal/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",

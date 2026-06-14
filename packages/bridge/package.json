@@ -12,8 +12,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/bridge/src packages/bridge/tests",
+    "test:watch": "vitest --root ../.. packages/bridge/src packages/bridge/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",

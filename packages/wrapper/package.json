@@ -16,7 +16,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsdown",
-    "test": "vitest run",
+    "test": "vitest run --root ../.. packages/wrapper/src",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [

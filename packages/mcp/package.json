@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/mcp/src packages/mcp/tests",
+    "test:watch": "vitest --root ../.. packages/mcp/src packages/mcp/tests"
   },
   "dependencies": {
     "@dot-protocol/chain": "workspace:*",

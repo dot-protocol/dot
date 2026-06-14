@@ -12,8 +12,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/mesh/src packages/mesh/tests",
+    "test:watch": "vitest --root ../.. packages/mesh/src packages/mesh/tests"
   },
   "dependencies": {
     "@dot-protocol/chain": "workspace:*",
