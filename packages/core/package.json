@@ -13,8 +13,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --root ../.. packages/core/tests",
+    "test:watch": "vitest --root ../.. packages/core/tests",
     "bench": "vitest bench"
   },
   "dependencies": {
