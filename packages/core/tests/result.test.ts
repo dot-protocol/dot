@@ -198,7 +198,7 @@ describe('safeVerify()', () => {
     const signed = signedR.value;
     // Corrupt the first byte of the signature
     const badSig = new Uint8Array(signed.sign!.signature!);
-    badSig[0] ^= 0xff;
+    badSig[0] = badSig[0]! ^ 0xff;
     const tampered: DOT = {
       ...signed,
       sign: { ...signed.sign, signature: badSig },
@@ -221,7 +221,7 @@ describe('safeVerify()', () => {
 
     const signed = signedR.value;
     const badSig = new Uint8Array(signed.sign!.signature!);
-    badSig[0] ^= 0xaa;
+    badSig[0] = badSig[0]! ^ 0xaa;
     const tampered: DOT = { ...signed, sign: { ...signed.sign, signature: badSig } };
 
     const r = await safeVerify(tampered);
@@ -437,7 +437,7 @@ describe('Error code consistency', () => {
     if (!isOk(signedR)) throw new Error('sign failed');
     const signed = signedR.value;
     const badSig = new Uint8Array(signed.sign!.signature!);
-    badSig[0] ^= 0xff;
+    badSig[0] = badSig[0]! ^ 0xff;
     const r = await safeVerify({ ...signed, sign: { ...signed.sign, signature: badSig } });
     if (isErr(r)) expect(r.error.code).toBe('VERIFY_FAILED');
   });
