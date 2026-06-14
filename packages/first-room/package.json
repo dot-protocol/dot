@@ -13,17 +13,18 @@
   "scripts": {
     "test": "vitest run --root ../.. packages/first-room/src packages/first-room/tests",
     "test:watch": "vitest --root ../.. packages/first-room/src packages/first-room/tests",
-    "seed": "node --loader ts-node/esm src/seed-runner.ts"
+    "seed": "node --loader ts-node/esm src/generate-html.ts"
   },
   "dependencies": {
-    "@dot-protocol/core": "workspace:*",
+    "@dot-protocol/browser": "workspace:*",
     "@dot-protocol/chain": "workspace:*",
+    "@dot-protocol/core": "workspace:*",
     "@dot-protocol/script": "workspace:*",
-    "@dot-protocol/viewer": "workspace:*",
     "@dot-protocol/tree": "workspace:*",
-    "@dot-protocol/browser": "workspace:*"
+    "@dot-protocol/viewer": "workspace:*"
   },
   "devDependencies": {
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.0",
     "vitest": "^3.1.0"
   },

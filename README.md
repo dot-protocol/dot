@@ -134,7 +134,7 @@ The first room exists. It has a genesis DOT:
 
 Three minds are inside: Feynman, Rumi, Shannon. Every observation is signed, chained, hashed. The room IS its chain. Wherever the chain is replicated, the room exists.
 
-Open `packages/first-room/index.html` in a browser. You're in.
+Run `pnpm --filter @dot-protocol/first-room seed`, then open `~/Downloads/the-first-room.html` in a browser. You're in.
 
 ---
 
