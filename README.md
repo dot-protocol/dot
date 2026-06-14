@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Language](https://img.shields.io/badge/language-TypeScript%20%2B%20Rust-3178c6.svg)](packages/)
-[![TS Tests](https://img.shields.io/badge/TS%20tests-3%2C048%20passing-brightgreen.svg)](packages/)
+[![TS Tests](https://img.shields.io/badge/TS%20tests-4%2C099%20passing-brightgreen.svg)](packages/)
 [![Rust Tests](https://img.shields.io/badge/Rust%20tests-275%20passing-brightgreen.svg)](rust/)
 [![Format](https://img.shields.io/badge/wire%20overhead-%3C256%20bytes-orange.svg)](packages/core/src/types.ts)
 
