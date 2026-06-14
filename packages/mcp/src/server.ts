@@ -53,6 +53,10 @@ import {
   type BridgeParams,
 } from './handlers.js';
 
+function typedParams<T>(params: Record<string, unknown>): T {
+  return params as unknown as T;
+}
+
 /**
  * Create and configure the DOT MCP server.
  *
@@ -67,17 +71,17 @@ export function createDotMCPServer(): MCPServer {
 
   // 1. dot_boot
   server.registerTool(DOT_BOOT_TOOL, async (params) =>
-    handleBoot(params as BootParams),
+    handleBoot(typedParams<BootParams>(params)),
   );
 
   // 2. dot_observe
   server.registerTool(DOT_OBSERVE_TOOL, async (params) =>
-    handleObserve(params as ObserveParams),
+    handleObserve(typedParams<ObserveParams>(params)),
   );
 
   // 3. dot_verify
   server.registerTool(DOT_VERIFY_TOOL, async (params) =>
-    handleVerify(params as VerifyParams),
+    handleVerify(typedParams<VerifyParams>(params)),
   );
 
   // 4. dot_chain
@@ -87,22 +91,22 @@ export function createDotMCPServer(): MCPServer {
 
   // 5. dot_sign
   server.registerTool(DOT_SIGN_TOOL, async (params) =>
-    handleSign(params as SignParams),
+    handleSign(typedParams<SignParams>(params)),
   );
 
   // 6. dot_trust
   server.registerTool(DOT_TRUST_TOOL, async (params) =>
-    handleTrust(params as TrustParams),
+    handleTrust(typedParams<TrustParams>(params)),
   );
 
   // 7. dot_compile
   server.registerTool(DOT_COMPILE_TOOL, async (params) =>
-    handleCompile(params as CompileParams),
+    handleCompile(typedParams<CompileParams>(params)),
   );
 
   // 8. dot_explain
   server.registerTool(DOT_EXPLAIN_TOOL, async (params) =>
-    handleExplain(params as ExplainParams),
+    handleExplain(typedParams<ExplainParams>(params)),
   );
 
   // 9. dot_health
@@ -112,12 +116,12 @@ export function createDotMCPServer(): MCPServer {
 
   // 10. dot_execute
   server.registerTool(DOT_EXECUTE_TOOL, async (params) =>
-    handleExecute(params as ExecuteParams),
+    handleExecute(typedParams<ExecuteParams>(params)),
   );
 
   // 11. dot_bridge
   server.registerTool(DOT_BRIDGE_TOOL, async (params) =>
-    handleBridge(params as BridgeParams),
+    handleBridge(typedParams<BridgeParams>(params)),
   );
 
   return server;
