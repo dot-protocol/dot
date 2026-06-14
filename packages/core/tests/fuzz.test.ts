@@ -109,7 +109,7 @@ describe('Fuzz: Random bytes → decode must not crash', () => {
 
   it('all-zeros input: must not crash', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 0, max: 1000 }), (len) => {
+      fc.property(fc.integer({ min: 0, max: 1000 }), (len) => {
         const result = tryDecode(new Uint8Array(len).fill(0));
         return result.ok === true || result.error instanceof Error;
       }),
@@ -119,7 +119,7 @@ describe('Fuzz: Random bytes → decode must not crash', () => {
 
   it('all-ones (0xff) input: must not crash', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 0, max: 1000 }), (len) => {
+      fc.property(fc.integer({ min: 0, max: 1000 }), (len) => {
         const result = tryDecode(new Uint8Array(len).fill(0xff));
         return result.ok === true || result.error instanceof Error;
       }),
@@ -171,7 +171,7 @@ describe('Fuzz: Random bytes → decode must not crash', () => {
 
   it('alternating 0x00 and 0xff bytes: must not crash', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 0, max: 500 }), (len) => {
+      fc.property(fc.integer({ min: 0, max: 500 }), (len) => {
         const bytes = new Uint8Array(len);
         for (let i = 0; i < len; i++) bytes[i] = i % 2 === 0 ? 0x00 : 0xff;
         const result = tryDecode(bytes);
@@ -389,7 +389,7 @@ describe('Fuzz: Truncated DOTs', () => {
 
   it('truncated FHE-mode DOT is handled', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 1, max: 100 }), (cutAt) => {
+      fc.property(fc.integer({ min: 1, max: 100 }), (cutAt) => {
         const dot: DOT = {
           fhe: {
             scheme: 'tfhe',
@@ -440,8 +440,8 @@ describe('Fuzz: Tag corruption', () => {
     fc.assert(
       fc.property(
         // Tags not in the known set
-        fc.nat({ min: 0x60, max: 0xff }),
-        fc.nat({ min: 0, max: 100 }),
+        fc.integer({ min: 0x60, max: 0xff }),
+        fc.integer({ min: 0, max: 100 }),
         (unknownTag, valueLen) => {
           // Craft a TLV with an unknown tag
           const value = new Uint8Array(valueLen).fill(0xaa);
@@ -514,7 +514,7 @@ describe('Fuzz: Tag corruption', () => {
   it('tag 0x52 (fhe.decryptable_by) with large length: handled', () => {
     fc.assert(
       fc.property(
-        fc.nat({ min: 0, max: 1000 }),
+        fc.integer({ min: 0, max: 1000 }),
         (len) => {
           // Craft fhe.decryptable_by TLV with arbitrary length
           const value = new Uint8Array(len).fill(0x42);
@@ -537,7 +537,7 @@ describe('Fuzz: Tag corruption', () => {
     fc.assert(
       fc.property(
         fc.nat({ max: 4 }),
-        fc.nat({ min: 2, max: 10 }),
+        fc.integer({ min: 2, max: 10 }),
         (typeIdx, repetitions) => {
           // Craft multiple TLVs with the same tag
           const types = [0x00, 0x01, 0x02, 0x03, 0x04];
@@ -571,7 +571,7 @@ describe('Fuzz: Tag corruption', () => {
 
   it('sign.signature tag (0x11) with wrong-length value: handled', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 0, max: 100 }), (len) => {
+      fc.property(fc.integer({ min: 0, max: 100 }), (len) => {
         // Ed25519 signatures should be 64 bytes; test any other length
         if (len === 64) return true; // skip valid length
         const value = new Uint8Array(len).fill(0x42);
@@ -592,7 +592,7 @@ describe('Fuzz: Tag corruption', () => {
 
   it('time.utc tag with wrong-length value: handled', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 0, max: 20 }), (len) => {
+      fc.property(fc.integer({ min: 0, max: 20 }), (len) => {
         if (len === 8) return true; // skip valid 8-byte encoding
         const value = new Uint8Array(len).fill(0x12);
         const tlv = new Uint8Array(5 + len);
@@ -659,7 +659,7 @@ describe('Fuzz: Length overflow', () => {
     const start = Date.now();
     const result = tryDecode(bytes);
     const elapsed = Date.now() - start;
-    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error('Expected MAX_UINT32 length to fail');
     expect(result.error).toBeInstanceOf(Error);
     expect(elapsed).toBeLessThan(100); // must fail fast, not OOM
   });
@@ -673,7 +673,7 @@ describe('Fuzz: Length overflow', () => {
     bytes[3] = (bigLen >>> 8) & 0xff;
     bytes[4] = bigLen & 0xff;
     const result = tryDecode(bytes);
-    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error('Expected oversized declared length to fail');
     expect(result.error).toBeInstanceOf(Error);
   });
 
@@ -681,7 +681,7 @@ describe('Fuzz: Length overflow', () => {
     fc.assert(
       fc.property(
         fc.nat({ max: 255 }),
-        fc.nat({ min: 0, max: 100 }),
+        fc.integer({ min: 0, max: 100 }),
         (tag, bodyLen) => {
           const declaredLen = bodyLen + 1; // 1 more than actual data
           const bytes = new Uint8Array(5 + bodyLen);
@@ -702,8 +702,8 @@ describe('Fuzz: Length overflow', () => {
   it('two consecutive TLVs: second with length overflow is caught', () => {
     fc.assert(
       fc.property(
-        fc.nat({ min: 1, max: 50 }),
-        fc.nat({ min: 1000, max: 4_294_967_295 }),
+        fc.integer({ min: 1, max: 50 }),
+        fc.integer({ min: 1000, max: 4_294_967_295 }),
         (firstValueLen, overflowLen) => {
           // First TLV: valid (type tag with small body)
           const firstTlv = new Uint8Array(5 + firstValueLen);
@@ -735,7 +735,7 @@ describe('Fuzz: Length overflow', () => {
 
   it('length field exactly equal to remaining bytes: should succeed (tight fit)', () => {
     fc.assert(
-      fc.property(fc.nat({ min: 0, max: 100 }), (bodyLen) => {
+      fc.property(fc.integer({ min: 0, max: 100 }), (bodyLen) => {
         // Valid TLV where length exactly matches remaining bytes
         const bytes = new Uint8Array(5 + bodyLen);
         bytes[0] = 0x01; // TAG_PAYLOAD
