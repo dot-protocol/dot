@@ -31,7 +31,7 @@ export interface QRDOTSpec {
  */
 export interface PhysicalDOT {
   qr: QRDOTSpec;
-  chain: import('@dot-protocol/core').DOT[];   // the DOTs encoded
+  chain: import('@dot-protocol/core').LegacyDOT[];   // the DOTs encoded
   scannerFace: 'camera' | 'reader';             // how to read it
   transformOnScan?: string;                     // transform registry ID triggered by scanning
 }
@@ -50,7 +50,7 @@ export const QR_CAPACITY = {
 
 /** Result of decoding a QR image into DOTs */
 export interface QRDecodeResult {
-  dots: import('@dot-protocol/core').DOT[];
+  dots: import('@dot-protocol/core').LegacyDOT[];
   encoding: QREncoding;
   verified: boolean;    // true if all DOT signatures passed
   errors: string[];

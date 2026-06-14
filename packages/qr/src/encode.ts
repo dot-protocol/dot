@@ -12,7 +12,7 @@
  */
 
 import { toBytes, fromBytes } from '@dot-protocol/core';
-import type { DOT } from '@dot-protocol/core';
+import type { LegacyDOT } from '@dot-protocol/core';
 import { QR_CAPACITY, type QREncoding, type QRDOTSpec } from './types.js';
 
 export const DOT_SIZE = 153 as const;
@@ -22,7 +22,7 @@ export const DOT_SIZE = 153 as const;
  * Each DOT occupies exactly 153 bytes. No framing, no header.
  * Maximum ~19 DOTs per standard QR v40 L.
  */
-export function encodeBinary(dots: DOT[]): Uint8Array {
+export function encodeBinary(dots: LegacyDOT[]): Uint8Array {
   if (dots.length === 0) throw new Error('Cannot encode empty DOT array');
   if (dots.length > QR_CAPACITY.dotsPerCode) {
     throw new Error(
@@ -32,7 +32,9 @@ export function encodeBinary(dots: DOT[]): Uint8Array {
 
   const buf = new Uint8Array(dots.length * DOT_SIZE);
   for (let i = 0; i < dots.length; i++) {
-    buf.set(toBytes(dots[i]), i * DOT_SIZE);
+    const dot = dots[i];
+    if (dot === undefined) throw new Error(`Missing DOT at index ${i}`);
+    buf.set(toBytes(dot), i * DOT_SIZE);
   }
   return buf;
 }
@@ -41,14 +43,14 @@ export function encodeBinary(dots: DOT[]): Uint8Array {
  * Decode a binary buffer back into DOTs.
  * Buffer length must be a multiple of 153.
  */
-export function decodeBinary(buf: Uint8Array): DOT[] {
+export function decodeBinary(buf: Uint8Array): LegacyDOT[] {
   if (buf.length % DOT_SIZE !== 0) {
     throw new Error(`Buffer length ${buf.length} is not a multiple of ${DOT_SIZE}`);
   }
 
-  const dots: DOT[] = [];
+  const dots: LegacyDOT[] = [];
   for (let offset = 0; offset < buf.length; offset += DOT_SIZE) {
-    dots.push(fromBytes(buf.slice(offset, offset + DOT_SIZE)));
+    dots.push(fromBytes(buf.slice(offset, offset + DOT_SIZE)) as unknown as LegacyDOT);
   }
   return dots;
 }
@@ -61,7 +63,7 @@ export function decodeBinary(buf: Uint8Array): DOT[] {
  * mask: repeated cycling of DOT bytes XOR'd with carrier bytes.
  * The carrier is recovered by XOR-ing again — symmetrical.
  */
-export function encodeSteganographic(dots: DOT[], carrier: Uint8Array): Uint8Array {
+export function encodeSteganographic(dots: LegacyDOT[], carrier: Uint8Array): Uint8Array {
   const dotBytes = encodeBinary(dots);
   if (dotBytes.length > carrier.length) {
     throw new Error(
@@ -71,7 +73,12 @@ export function encodeSteganographic(dots: DOT[], carrier: Uint8Array): Uint8Arr
 
   const result = new Uint8Array(carrier);
   for (let i = 0; i < dotBytes.length; i++) {
-    result[i] = result[i] ^ dotBytes[i];
+    const carrierByte = result[i];
+    const dotByte = dotBytes[i];
+    if (carrierByte === undefined || dotByte === undefined) {
+      throw new Error(`Missing steganographic byte at offset ${i}`);
+    }
+    result[i] = carrierByte ^ dotByte;
   }
   return result;
 }
@@ -84,10 +91,15 @@ export function decodeSteganographic(
   masked: Uint8Array,
   carrier: Uint8Array,
   dotCount: number
-): DOT[] {
+): LegacyDOT[] {
   const recovered = new Uint8Array(dotCount * DOT_SIZE);
   for (let i = 0; i < recovered.length; i++) {
-    recovered[i] = masked[i] ^ carrier[i];
+    const maskedByte = masked[i];
+    const carrierByte = carrier[i];
+    if (maskedByte === undefined || carrierByte === undefined) {
+      throw new Error(`Missing steganographic byte at offset ${i}`);
+    }
+    recovered[i] = maskedByte ^ carrierByte;
   }
   return decodeBinary(recovered);
 }
@@ -99,15 +111,17 @@ export function decodeSteganographic(
  *
  * Format per entry: [index_hi, index_lo, ...153 bytes DOT]
  */
-export function encodeNested(dots: DOT[]): Uint8Array {
+export function encodeNested(dots: LegacyDOT[]): Uint8Array {
   const ENTRY_SIZE = 2 + DOT_SIZE; // 2-byte index + 153-byte DOT
   const buf = new Uint8Array(dots.length * ENTRY_SIZE);
 
   for (let i = 0; i < dots.length; i++) {
+    const dot = dots[i];
+    if (dot === undefined) throw new Error(`Missing DOT at index ${i}`);
     const offset = i * ENTRY_SIZE;
     buf[offset] = (i >> 8) & 0xff;
     buf[offset + 1] = i & 0xff;
-    buf.set(toBytes(dots[i]), offset + 2);
+    buf.set(toBytes(dot), offset + 2);
   }
   return buf;
 }
@@ -116,16 +130,21 @@ export function encodeNested(dots: DOT[]): Uint8Array {
  * Decode DOTs from nested mode buffer.
  * Returns DOTs ordered by their embedded index.
  */
-export function decodeNested(buf: Uint8Array): DOT[] {
+export function decodeNested(buf: Uint8Array): LegacyDOT[] {
   const ENTRY_SIZE = 2 + DOT_SIZE;
   if (buf.length % ENTRY_SIZE !== 0) {
     throw new Error(`Buffer length ${buf.length} is not a multiple of ${ENTRY_SIZE}`);
   }
 
-  const entries: Array<{ index: number; dot: DOT }> = [];
+  const entries: Array<{ index: number; dot: LegacyDOT }> = [];
   for (let offset = 0; offset < buf.length; offset += ENTRY_SIZE) {
-    const index = (buf[offset] << 8) | buf[offset + 1];
-    const dot = fromBytes(buf.slice(offset + 2, offset + 2 + DOT_SIZE));
+    const indexHi = buf[offset];
+    const indexLo = buf[offset + 1];
+    if (indexHi === undefined || indexLo === undefined) {
+      throw new Error(`Missing nested index at offset ${offset}`);
+    }
+    const index = (indexHi << 8) | indexLo;
+    const dot = fromBytes(buf.slice(offset + 2, offset + 2 + DOT_SIZE)) as unknown as LegacyDOT;
     entries.push({ index, dot });
   }
 

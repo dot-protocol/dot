@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { createKeypair, createDOT } from '@dot-protocol/core';
+import type { LegacyDOT } from '@dot-protocol/core';
 import {
   encodeBinary,
   decodeBinary,
@@ -12,10 +13,10 @@ import {
 } from '../encode.js';
 import { QR_CAPACITY } from '../types.js';
 
-async function makeDots(count: number) {
+async function makeDots(count: number): Promise<LegacyDOT[]> {
   const kp = await createKeypair();
-  const dots = [];
-  let prev = undefined;
+  const dots: LegacyDOT[] = [];
+  let prev: LegacyDOT | undefined = undefined;
   for (let i = 0; i < count; i++) {
     const dot = await createDOT({ keypair: kp, previous: prev });
     dots.push(dot);
@@ -24,15 +25,24 @@ async function makeDots(count: number) {
   return dots;
 }
 
+async function makeDot(): Promise<LegacyDOT> {
+  const dots = await makeDots(1);
+  const dot = dots[0];
+  if (dot === undefined) throw new Error('makeDots(1) returned no DOT');
+  return dot;
+}
+
 describe('Binary encoding', () => {
   it('encodes and decodes a single DOT', async () => {
-    const [dot] = await makeDots(1);
+    const dot = await makeDot();
     const buf = encodeBinary([dot]);
     expect(buf.length).toBe(DOT_SIZE);
     const decoded = decodeBinary(buf);
+    const decodedDot = decoded[0];
+    if (decodedDot === undefined) throw new Error('decodeBinary returned no DOT');
     expect(decoded).toHaveLength(1);
-    expect(decoded[0].pubkey).toEqual(dot.pubkey);
-    expect(decoded[0].sig).toEqual(dot.sig);
+    expect(decodedDot.pubkey).toEqual(dot.pubkey);
+    expect(decodedDot.sig).toEqual(dot.sig);
   });
 
   it('encodes and decodes multiple DOTs', async () => {
@@ -42,7 +52,12 @@ describe('Binary encoding', () => {
     const decoded = decodeBinary(buf);
     expect(decoded).toHaveLength(5);
     for (let i = 0; i < 5; i++) {
-      expect(decoded[i].pubkey).toEqual(dots[i].pubkey);
+      const decodedDot = decoded[i];
+      const dot = dots[i];
+      if (decodedDot === undefined || dot === undefined) {
+        throw new Error(`missing DOT at index ${i}`);
+      }
+      expect(decodedDot.pubkey).toEqual(dot.pubkey);
     }
   });
 
@@ -52,8 +67,8 @@ describe('Binary encoding', () => {
 
   it(`throws when exceeding QR capacity of ${QR_CAPACITY.dotsPerCode} DOTs`, async () => {
     // Mock DOT count exceeding limit without generating them all
-    const dots = await makeDots(1);
-    const tooMany = Array(QR_CAPACITY.dotsPerCode + 1).fill(dots[0]);
+    const dot = await makeDot();
+    const tooMany: LegacyDOT[] = Array(QR_CAPACITY.dotsPerCode + 1).fill(dot);
     expect(() => encodeBinary(tooMany)).toThrow();
   });
 
@@ -70,7 +85,12 @@ describe('Nested encoding', () => {
     const decoded = decodeNested(buf);
     expect(decoded).toHaveLength(3);
     for (let i = 0; i < 3; i++) {
-      expect(decoded[i].pubkey).toEqual(dots[i].pubkey);
+      const decodedDot = decoded[i];
+      const dot = dots[i];
+      if (decodedDot === undefined || dot === undefined) {
+        throw new Error(`missing DOT at index ${i}`);
+      }
+      expect(decodedDot.pubkey).toEqual(dot.pubkey);
     }
   });
 
@@ -94,7 +114,12 @@ describe('Steganographic encoding', () => {
 
     const masked = encodeSteganographic(dots, carrier);
     const recovered = decodeSteganographic(masked, carrier, 1);
-    expect(recovered[0].pubkey).toEqual(dots[0].pubkey);
+    const recoveredDot = recovered[0];
+    const dot = dots[0];
+    if (recoveredDot === undefined || dot === undefined) {
+      throw new Error('missing steganographic round-trip DOT');
+    }
+    expect(recoveredDot.pubkey).toEqual(dot.pubkey);
   });
 
   it('throws if DOT payload exceeds carrier', async () => {
