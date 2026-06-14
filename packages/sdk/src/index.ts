@@ -9,7 +9,58 @@
  */
 
 // ── Core — DOT creation, signing, verification, BLS ─────────────────────────
-export * from '@dot-protocol/core';
+export {
+  observe,
+  sign,
+  buildSignedBytes,
+  verify,
+  chain,
+  hash,
+  toBytes,
+  fromBytes,
+  computeTrust,
+  createIdentity,
+  LEGACY_DOT_SIZE,
+  DotType,
+  createKeypair,
+  createDOT,
+  legacyToBytes,
+  verifyDOT,
+  checkChain,
+  createBLSKeypair,
+  signBLS,
+  aggregateSignatures,
+  verifyAggregateSameSigner,
+  batchPackBLS,
+  computeLevel,
+  DOTLevel,
+  ok,
+  err,
+  isOk,
+  isErr,
+  unwrap as unwrapResult,
+  unwrapOr,
+  safeVerify,
+  safeSign,
+  safeDecode,
+  safeHash,
+} from '@dot-protocol/core';
+export type {
+  ObserveOptions,
+  VerifyResult,
+  Identity,
+  Keypair,
+  LegacyDOT,
+  BLSKeypair,
+  CreateDOTOptions,
+  DOT,
+  UnsignedDOT,
+  ObservationType,
+  PayloadMode,
+  IdentityLevel,
+  Result,
+  DOTError,
+} from '@dot-protocol/core';
 
 // ── Compression — batch v2, zstd, rANS, predictor, Weissman ─────────────────
 export * from '@dotprotocol/compression';
@@ -19,8 +70,40 @@ export * from '@dotprotocol/compression';
 export * from '@dotprotocol/identity';
 
 // ── Chain — append-only worldline + pluggable storage ───────────────────────
-// (createChain, appendDOT, getHead, getRange, verifyChain, MemoryStorage — no conflicts)
-export * from '@dot-protocol/chain';
+// Chain's VerifyResult is aliased to avoid colliding with core's VerifyResult.
+export {
+  MemoryStorage,
+  SQLiteStorage,
+  createChain,
+  append,
+  walk,
+  tip,
+  root,
+  depth,
+  verify_chain,
+  dotHashToHex,
+  bufToHex,
+  hexToBuf,
+  detectFork,
+  merge,
+  byHash,
+  byTimeRange,
+  byType,
+  byObserver,
+  byDepthRange,
+  health,
+  checkAutoEmit,
+  getMetaChain,
+  clearMetaChains,
+} from '@dot-protocol/chain';
+export type {
+  StorageBackend,
+  ListOptions,
+  Chain,
+  VerifyResult as ChainVerifyResult,
+  ForkResult,
+  HealthReport,
+} from '@dot-protocol/chain';
 
 // ── Relay — CHORUS relay client + server ────────────────────────────────────
 // DOT_SIZE is excluded here — it conflicts with core's DOT_SIZE (both = 153).
