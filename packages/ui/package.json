@@ -11,8 +11,8 @@
     }
   },
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest run --root ../.. packages/ui/tests",
+    "test:watch": "vitest --root ../.. packages/ui/tests"
   },
   "dependencies": {
     "@dot-protocol/core": "workspace:*",
