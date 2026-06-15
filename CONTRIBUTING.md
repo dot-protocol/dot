@@ -67,7 +67,9 @@ packages/{name}/
 - Every package exports `health(): DOT` (self-awareness)
 - Result types for functions that can fail (see `core/src/result.ts`)
 - BLAKE3 for all hashing. Ed25519 for all signing.
-- Apache-2.0 license on everything
+- Preserve each package's declared license metadata. New repo-level contributions
+  default to Apache-2.0; live provenance packages that already carry MIT metadata
+  keep it unless maintainers explicitly approve a relicensing change.
 
 ## Tests
 
@@ -99,7 +101,10 @@ packages/{name}/
 
 ## License
 
-All contributions are licensed under Apache-2.0. By submitting a pull request, you confirm that you have the right to grant that license. No CLA beyond the Apache-2.0 license itself is required.
+New repo-level contributions are licensed under Apache-2.0 unless a package already
+declares a narrower local license. By submitting a pull request, you confirm that you
+have the right to grant the applicable package license. No CLA beyond the applicable
+package license itself is required.
 
 ## Code of Conduct
 
