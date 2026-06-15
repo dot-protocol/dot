@@ -1,6 +1,6 @@
 # @dotprotocol/compression
 
-Batch packing for DOT Protocol — Ed25519 + BLS12-381 signature aggregation.
+DOT Protocol stream compression: batch v2, varint deltas, RLE, dictionary compression, prediction, rANS, and benchmark scoring.
 
 [![npm](https://img.shields.io/npm/v/@dotprotocol/compression)](https://www.npmjs.com/package/@dotprotocol/compression)
 
@@ -13,11 +13,19 @@ npm install @dotprotocol/compression
 ## Quick start
 
 ```js
-import { pack, unpack } from '@dotprotocol/compression';
+import { createBLSKeypair } from '@dot-protocol/core';
+import { serializeBatchV2, deserializeBatchV2 } from '@dotprotocol/compression';
 
-// Pack 1000 DOTs for storage/transport
-const packed  = pack(dots);         // much smaller than 1000 × 153 bytes
-const restored = unpack(packed);    // original DOTs, fully verified
+const blsKeypair = createBLSKeypair();
+
+// Pack a chain of 153-byte DOT buffers into a column-oriented frame.
+const frame = await serializeBatchV2(dotBytes, blsKeypair, {
+  timestampDelta: true,
+  payloadTypeRLE: true,
+});
+
+// Recover DOT buffers and verify the BLS aggregate signature.
+const recovered = await deserializeBatchV2(frame, blsKeypair.publicKey);
 ```
 
 ## When to use
@@ -29,52 +37,79 @@ const restored = unpack(packed);    // original DOTs, fully verified
 
 ## API
 
-### `pack(dots, options?)`
+### `serializeBatchV2(dots, blsKeypair, options?)`
 
-Aggregate a batch of DOTs into a compact representation.
+Serialize same-signer DOT buffers into a batch v2 frame. The frame uses a BLS aggregate signature and can encode timestamps as varint deltas, payload types with RLE, payloads with prediction+rANS, or the body with a zstd dictionary.
 
 ```js
-const packed = pack(dots, {
-  method: 'ed25519',    // default — lossless compression
-  // method: 'bls'     // BLS12-381 signature aggregation (experimental)
+const frame = await serializeBatchV2(dotBytes, blsKeypair, {
+  timestampDelta: true,
+  payloadTypeRLE: true,
+  predictor: 'auto',
 });
-// Returns: Uint8Array
 ```
 
-### `unpack(packed)`
+### `deserializeBatchV2(frame, blsPublicKey, options?)`
 
-Restore DOTs from a packed batch. Verifies all signatures.
+Deserialize a batch v2 frame back into DOT buffers and verify the BLS aggregate signature. Dictionary-compressed frames require a registry containing the matching dictionary id.
 
 ```js
-const dots = unpack(packed);
-// Returns: DOT[]
+const dots = await deserializeBatchV2(frame, blsPublicKey, {
+  dictionaryRegistry,
+});
 ```
 
-### `packStream(dotStream)`
+### `DictionaryRegistry`
 
-Streaming pack — useful for very large archives:
+Register and persist zstd dictionaries by deterministic SHA-256 id.
 
 ```js
-import { packStream } from '@dotprotocol/compression';
+import { DictionaryRegistry } from '@dotprotocol/compression';
 
-const writer = packStream(outputStream);
-for await (const dot of dotStream) {
-  writer.write(dot);
-}
-await writer.end();
+const registry = new DictionaryRegistry();
+const dictionaryId = await registry.register(dictionaryBytes, 'sensor-v1');
+const saved = registry.export();
+const restored = DictionaryRegistry.import(saved);
+```
+
+### Lower-level modules
+
+The package also exports the building blocks used by batch v2:
+
+- `encodeVarint` / `decodeVarint`
+- `encodeTimestampDeltas` / `decodeTimestampDeltas`
+- `encodePayloadTypes` / `decodePayloadTypes`
+- `NullPredictor`, `LastValuePredictor`, `LinearPredictor`
+- `buildFrequencyTable`, `ransEncode`, `ransDecode`
+- `trainDictionary`, `compressWithDictionary`, `decompressWithDictionary`
+- `generateSensorStream`
+- `weissmanScore`
+
+## Utilities
+
+Generate realistic DOT streams for benchmarks and tests:
+
+```js
+import { generateSensorStream } from '@dotprotocol/compression';
+
+const dots = await generateSensorStream({
+  count: 1000,
+  profile: 'kulhadVoltage',
+});
 ```
 
 ## Compression ratios
 
-Typical results with `ed25519` method (LZ4 + deduplication):
+Actual ratios depend on payload entropy, timestamp regularity, type repetition, dictionary quality, and predictor fit. The checked-in benchmark tests compare raw DOT bytes, plain batch v2, dictionary batch v2, predictor+rANS, and gzip baselines.
 
-| DOTs | Raw size | Packed size | Ratio |
-|------|----------|-------------|-------|
-| 100 | 15.3 KB | ~4-6 KB | ~3x |
-| 1,000 | 153 KB | ~35-55 KB | ~3-4x |
-| 10,000 | 1.53 MB | ~300-500 KB | ~4-5x |
+Use `weissmanScore` and the benchmark suites under `src/tests/` for reproducible measurements against the current implementation.
 
-Actual ratios depend on payload entropy.
+## Scripts
+
+```bash
+pnpm --filter @dotprotocol/compression test
+pnpm --filter @dotprotocol/compression typecheck
+```
 
 ## License
 
