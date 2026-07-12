@@ -1,0 +1,26 @@
+{
+  "cryptography": {
+    "archival": true,
+    "bip32_path": "m/44'/0'/0'/0/0",
+    "note": "v0.2 envelope shape preserved for spec-conformance. Session-key fields (To_ed25519, To_x25519, Nonce, PoW, AES-GCM ciphertext, Signature) intentionally omitted: payload is CC0 public-domain text, content-addressing via BLAKE3 is the integrity primitive."
+  },
+  "header": {
+    "chunk_index": 2,
+    "compressed_size_bytes": 1024,
+    "doc_path": "republic-spec.md",
+    "lamport_seq": 2,
+    "magic": 1297100850,
+    "origin_cell": "dot1:kin-1-piper:shannon",
+    "raw_size_bytes": 1825,
+    "target_cell": "dot1:broadcast:republic-spec/v0.1.1",
+    "total_chunks": 32,
+    "version": "mathpost/0.2-archival"
+  },
+  "payload": {
+    "chunk_blake3": "6fff8aba55da8b3fda4be192b78fd7d380c7c8532b8199126447264876281c57",
+    "chunk_sha256": "4e7318f9456583df81688134083a551b9db24e67b9a6899926fd425bc15dc1de",
+    "compression": "zstd-level-3",
+    "encryption": "none-cc0-public",
+    "raw_blake3": "a5532a1684409d0907802a171d51823f32380295aaf7a143ed80c702e9f7bfc1"
+  }
+}

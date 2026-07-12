@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Republic — Storage Bound Simulator</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #2c2c2a;
+    --muted: #888780;
+    --hint: #b4b2a9;
+    --surface: #f1efe8;
+    --info-bg: #e6f1fb;
+    --info-fg: #042c53;
+    --cloud: #d85a30;
+    --republic: #0f6e56;
+    --border: rgba(0,0,0,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --fg: #f1efe8;
+      --muted: #b4b2a9;
+      --hint: #888780;
+      --surface: #2c2c2a;
+      --info-bg: #042c53;
+      --info-fg: #b5d4f4;
+      --border: rgba(255,255,255,0.12);
+    }
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 20px; font-weight: 500; margin: 0 0 6px; }
+  .deck { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+  .row { margin-bottom: 14px; }
+  .lbl { font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .lbl .v { font-weight: 500; color: var(--fg); font-variant-numeric: tabular-nums; }
+  input[type=range] { width: 100%; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+  .stat { background: var(--surface); border-radius: 8px; padding: 12px; }
+  .stat .k { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .stat .n { font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .bigratio { background: var(--info-bg); color: var(--info-fg); border-radius: 8px; padding: 16px; text-align: center; margin: 16px 0; }
+  .bigratio .n { font-size: 32px; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .bigratio .s { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .hint { font-size: 11px; color: var(--hint); margin-top: 3px; }
+  footer { font-size: 12px; color: var(--muted); margin-top: 2rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<h1>Storage Bound Simulator</h1>
+<p class="deck">
+  Cloud cost scales linearly with raw data, $r \cdot |x|$ for replication
+  factor $r=3$. The Republic's four-regime architecture scales toward the
+  Kolmogorov bound $K(x)$. Move the sliders; watch the ratio diverge.
+</p>
+
+<div class="row">
+  <div class="lbl"><span>Raw lifetime data |x|</span><span class="v" id="vRaw">100 GB</span></div>
+  <input type="range" id="raw" min="0" max="100" value="33">
+  <div class="hint">1 GB → 1 PB, log scale</div>
+</div>
+
+<div class="row">
+  <div class="lbl"><span>R2 (shared media — content-addressed)</span><span class="v" id="vR2">40%</span></div>
+  <input type="range" id="r2" min="0" max="90" value="40">
+</div>
+
+<div class="row">
+  <div class="lbl"><span>R3 (compressible text/data)</span><span class="v" id="vR3">40%</span></div>
+  <input type="range" id="r3" min="0" max="90" value="40">
+</div>
+
+<div class="row">
+  <div class="lbl"><span>R4 (procedural / generative)</span><span class="v" id="vR4">10%</span></div>
+  <input type="range" id="r4" min="0" max="90" value="10">
+  <div class="hint">R1 (mathematical primitives) = remainder: <span id="vR1">10%</span></div>
+</div>
+
+<div class="row">
+  <div class="lbl"><span>R3 compression ratio</span><span class="v" id="vComp">100×</span></div>
+  <input type="range" id="comp" min="2" max="1000" value="100">
+</div>
+
+<div class="grid">
+  <div class="stat">
+    <div class="k">Cloud (3× replication)</div>
+    <div class="n" id="vCloud" style="color: var(--cloud);">300 GB</div>
+  </div>
+  <div class="stat">
+    <div class="k">Republic (4 regimes)</div>
+    <div class="n" id="vRep" style="color: var(--republic);">405 MB</div>
+  </div>
+</div>
+
+<div class="bigratio">
+  <div class="n" id="vRatio">740×</div>
+  <div class="s">less storage than cloud at these settings</div>
+</div>
+
+<div style="position: relative; width: 100%; height: 240px;">
+  <canvas id="cbar"></canvas>
+</div>
+
+<footer>
+  Reference: <em>Storage as Derivation</em>, Republic Council 2026.<br>
+  Math: cloud = 3·|x|; republic = c₁ + c₂ + c₃ + c₄ where<br>
+  c₁ ≈ 50 KB + (f₁·|x|)/5000 (derivation),
+  c₂ ≈ (f₂·|x|)·(32/10⁶) (content-addressed),
+  c₃ = (f₃·|x|)/comp (compressed),
+  c₄ ≈ (f₄·|x|)·(10/50000) (procedural recipe).<br>
+  Ratio is gauge-invariant under positive rescaling — see exp09.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+function fmtBytes(b) {
+  if (b < 1024) return Math.round(b) + ' B';
+  if (b < 1e6) return (b/1024).toFixed(1) + ' KB';
+  if (b < 1e9) return (b/1e6).toFixed(1) + ' MB';
+  if (b < 1e12) return (b/1e9).toFixed(1) + ' GB';
+  if (b < 1e15) return (b/1e12).toFixed(1) + ' TB';
+  return (b/1e15).toFixed(1) + ' PB';
+}
+function logScale(v, min, max) {
+  const a = Math.log10(min), b = Math.log10(max);
+  return Math.pow(10, a + (v/100) * (b - a));
+}
+const cssCloud = getComputedStyle(document.body).getPropertyValue('--cloud').trim() || '#d85a30';
+const cssRep = getComputedStyle(document.body).getPropertyValue('--republic').trim() || '#0f6e56';
+
+let chart;
+function compute() {
+  const raw = logScale(+document.getElementById('raw').value, 1e9, 1e15);
+  let r2 = +document.getElementById('r2').value;
+  let r3 = +document.getElementById('r3').value;
+  let r4 = +document.getElementById('r4').value;
+  let r1 = Math.max(0, 100 - r2 - r3 - r4);
+  const tot = r1 + r2 + r3 + r4;
+  if (tot > 100) {
+    const s = 100 / tot;
+    r1 = Math.round(r1*s); r2 = Math.round(r2*s); r3 = Math.round(r3*s); r4 = Math.round(r4*s);
+  }
+  const f1=r1/100, f2=r2/100, f3=r3/100, f4=r4/100;
+  const comp = +document.getElementById('comp').value;
+  const cloud = 3 * raw;
+  const c1 = 50000 + (raw * f1) / 5000;
+  const c2 = (raw * f2) * (32 / 1e6);
+  const c3 = (raw * f3) / comp;
+  const c4 = (raw * f4) * (10 / 50000);
+  const rep = c1 + c2 + c3 + c4;
+  const ratio = cloud / Math.max(rep, 1);
+
+  document.getElementById('vRaw').textContent = fmtBytes(raw);
+  document.getElementById('vR1').textContent = r1 + '%';
+  document.getElementById('vR2').textContent = r2 + '%';
+  document.getElementById('vR3').textContent = r3 + '%';
+  document.getElementById('vR4').textContent = r4 + '%';
+  document.getElementById('vComp').textContent = comp + '×';
+  document.getElementById('vCloud').textContent = fmtBytes(cloud);
+  document.getElementById('vRep').textContent = fmtBytes(rep);
+  document.getElementById('vRatio').textContent = Math.round(ratio).toLocaleString() + '×';
+
+  if (chart) {
+    chart.data.datasets[0].data = [cloud, rep];
+    chart.update('none');
+  }
+}
+['raw','r2','r3','r4','comp'].forEach(id => {
+  document.getElementById(id).addEventListener('input', compute);
+});
+const ctx = document.getElementById('cbar').getContext('2d');
+chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Cloud (3× replicated)', 'Republic (four regimes)'],
+    datasets: [{
+      data: [3e11, 4.05e8],
+      backgroundColor: [cssCloud, cssRep],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => fmtBytes(c.parsed.y) } }
+    },
+    scales: {
+      y: {
+        type: 'logarithmic',
+        ticks: { callback: v => fmtBytes(v) },
+        title: { display: true, text: 'bytes stored (log scale)' }
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+compute();
+</script>
+</body>
+</html>

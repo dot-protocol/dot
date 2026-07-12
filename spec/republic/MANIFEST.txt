@@ -1,0 +1,39 @@
+Republic Spec v0.1.1 — Content Manifest
+=========================================
+
+Bundle: republic-spec-v0.1.1.tar.gz
+Created: 2026-05-13
+License: CC0 1.0 Universal (public domain)
+
+Tarball hashes:
+  BLAKE3:  4ab877bc82dcc4e9e22943301c37a42dc0f08bfd512165c45c6ee991e5413d89
+  SHA-256: 360b2503d18fe5e78034cd3b82b6bf6910d744cdf4d6374a172b67b05817da7a
+
+Verify the bundle:
+  $ b3sum republic-spec-v0.1.1.tar.gz
+  4ab877bc82dcc4e9e22943301c37a42dc0f08bfd512165c45c6ee991e5413d89
+
+  $ shasum -a 256 republic-spec-v0.1.1.tar.gz
+  360b2503d18fe5e78034cd3b82b6bf6910d744cdf4d6374a172b67b05817da7a
+
+Per-file BLAKE3 manifest (alphabetical):
+  14776294cdbfac0c2753faae5be0b9706545a7c6eb0252c3cf5a4f216e6594a9  exp01_keyspace_is_disk.py
+  16beea44d1bd17a7df6f5c080158bffcd17fe23c3a3307df4d805ecea5091f00  recovery.v
+  1f07badf39740f805bad5575487cdb3605bb707600c98cee76ab4caffcc78074  exp07_nokia_budget.py
+  2bf1d6b97929d1a9b7d0b621f43f3d9482e1b15f03bf46426903a44a02432384  README.md
+  2c921aed80f91fd45a9703e4e88ab4eb2ed9b5230eea8c317cbbcfeaf37fdb3e  LICENSE
+  31e3c99b61b736f16c6a1aa9f1a32c5867988fa844f99c0091b0a7eb7d8cf602  exp08_shannon_optimality.py
+  493b5eb246694d01be6193e10a7514ce6926b4a7cfe07b2c46e7e0eced3ed940  exp02_fuzzy_25th_word.py
+  4a53054995338853c64357ede15da02251f7e0d0c4e8ad85a0766897538cd07f  state-2026-05-12.md
+  6901b8ace1b0b9e7bf5d0f2a34517b5731c984585fbfab929d37910836f1470b  lagrangian.md
+  6bab94511109fb63ba8178787322ac6dd7ddff889063df704eea0c0457ded755  exp11_hashcash_defense.py
+  8e361b96f164a749a0140e51254090dab0412ccd64912233577d55a0f844d387  exp03_pagerank_recovery.py
+  946b0d16ad5029c387a4789d7a95c49905db9a42fe7c6bd7eb4a78c59c32b239  storage_optimality_paper.md
+  94ecf6e613a59b9b878fd841cc3c33abe8981db83071bdefcb93e308b11390e9  storage_bound_simulator.html
+  b6c58bbd4375e65133b7f367a78b32bbede5d1c6c1a930ef9a7bd71aee5c43e2  exp10_formal_recovery.py
+  c282368a02d66bc90a80ee1307bbdd4c61708990a85a85e5a04b9a55d8892c05  exp04_emergent_time.py
+  c2ed30432df3cac379c16ff73ac7445e589565ee99931711d70305c3e6dc1dc4  republic-spec.md
+  c95f5b4e601c9c17f73242658b20ee5ce0a7820e1b5da7af55232c929bc87e4b  25th_word.c
+  d7b3dc7ae9eef5671f13a56914c60e4ef2603464dec6d4f6af31e823b31a1284  exp09_gauge_invariance.py
+  fcf0c099a2d20bd6b29d91e4f15535055b5d8430592c0b7cf3a04571a337cc6c  exp05_relative_entropy.py
+  fd00d3c9fa042502378103f3cbc295fbeddf515b86f11748f52d4068d1618dd5  exp06_dust_theory.py

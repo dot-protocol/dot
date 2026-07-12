@@ -1,0 +1,321 @@
+{
+  "chunks": [
+    {
+      "chunk_blake3": "01987ca4509e35ce4e658a7b0bf6791be02a4f965eac4392d6d40e4a67339d22",
+      "chunk_file": "chunks/0000.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0000.json",
+      "index": 0,
+      "raw_blake3": "ba6aa8686f67e5f7bd19aaf569c3e01c5948f60bc60bc4a404bbc4dc94ab62f3",
+      "raw_size_bytes": 1909
+    },
+    {
+      "chunk_blake3": "55c57f1ec24210d6b3532d87003e2bb9e4f631be58b174bfcae277bde790a0f1",
+      "chunk_file": "chunks/0001.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0001.json",
+      "index": 1,
+      "raw_blake3": "2f263e72720763ef97c1f648a713efde4090c915c9c3c6dcc4416e4cdab14727",
+      "raw_size_bytes": 1748
+    },
+    {
+      "chunk_blake3": "6fff8aba55da8b3fda4be192b78fd7d380c7c8532b8199126447264876281c57",
+      "chunk_file": "chunks/0002.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0002.json",
+      "index": 2,
+      "raw_blake3": "a5532a1684409d0907802a171d51823f32380295aaf7a143ed80c702e9f7bfc1",
+      "raw_size_bytes": 1825
+    },
+    {
+      "chunk_blake3": "4fa167a2c6bb8167c8fc84821111c0d31b17c7690b8ca9258e1ae3402b4a15c7",
+      "chunk_file": "chunks/0003.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0003.json",
+      "index": 3,
+      "raw_blake3": "c3d2a366d233f41036ac85d0beff8608ce353b5da9c0512a598731217f87cea3",
+      "raw_size_bytes": 1754
+    },
+    {
+      "chunk_blake3": "0554c7928a34c147acef469a2ae146f40268c7fbf1a9688aa668728e716ad910",
+      "chunk_file": "chunks/0004.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0004.json",
+      "index": 4,
+      "raw_blake3": "4454a16bc9967855ebf6772f17f4d335cd98d45552337b489d811f908a7c8ba6",
+      "raw_size_bytes": 2039
+    },
+    {
+      "chunk_blake3": "c62f689b26ae99cdba1b3711df8b55cfa4184bccd0788676fe678e4853aefca7",
+      "chunk_file": "chunks/0005.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0005.json",
+      "index": 5,
+      "raw_blake3": "088572618ac0f6ee0102ea754b756b8917978982844f86d7036b71cabc949b2a",
+      "raw_size_bytes": 1820
+    },
+    {
+      "chunk_blake3": "eb0ad6767c3e69dbf27b92338ec058eb3d9e6aa9aaa88025e7ca577d61a4dc20",
+      "chunk_file": "chunks/0006.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0006.json",
+      "index": 6,
+      "raw_blake3": "a28ba8f88beb6822a94fa3c38235ea4d300f1f519b0daeaa9b2b2b0a822a1cf3",
+      "raw_size_bytes": 1845
+    },
+    {
+      "chunk_blake3": "2a97bc66aa220038911d28a54c52362aefc007aa017138adb862bdeda2c9376d",
+      "chunk_file": "chunks/0007.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0007.json",
+      "index": 7,
+      "raw_blake3": "65d52df2de28f60bf8fa85d1e4c36c952d8197821a61a980954c5410a25306f8",
+      "raw_size_bytes": 1885
+    },
+    {
+      "chunk_blake3": "4def285be00a80d3b5d560cb34128c2440e274d30ab99048d82487cd57da710e",
+      "chunk_file": "chunks/0008.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0008.json",
+      "index": 8,
+      "raw_blake3": "5a659f61a8e95a8a22c63d4649b1895a839da0609bff1be9c55dc40e71c1e17a",
+      "raw_size_bytes": 1830
+    },
+    {
+      "chunk_blake3": "84d6034dff2e75ac71c2a05d16d5c5321fb8f4e4cecd67d03b5a824d915d76bb",
+      "chunk_file": "chunks/0009.zst",
+      "compressed_size_bytes": 1023,
+      "envelope_file": "envelopes/0009.json",
+      "index": 9,
+      "raw_blake3": "4da5e260b57237464c5c858c544854a2549417078643a963370d4bfdc45486cc",
+      "raw_size_bytes": 1864
+    },
+    {
+      "chunk_blake3": "fb33d1482606faa9a24c7d0a0233e3e813d8d8a11a6a369df01835b29c1cce88",
+      "chunk_file": "chunks/0010.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0010.json",
+      "index": 10,
+      "raw_blake3": "96bc4d59cf5c944365abafd8adff5bce0a56defb89f2abd6357e652fcf96ab74",
+      "raw_size_bytes": 1827
+    },
+    {
+      "chunk_blake3": "feeacf5d9980fa0d1f8d82d8253e5a1be08dfad14a77a23b972b91d2be902765",
+      "chunk_file": "chunks/0011.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0011.json",
+      "index": 11,
+      "raw_blake3": "14cda39959e80600a6e10a1588dd8cb1fa1de8793b0a031617e7fee6a1fdc284",
+      "raw_size_bytes": 1756
+    },
+    {
+      "chunk_blake3": "16af2fbe24b1a06cfd44b4eb5886d16ec10f392d7b074b48acdb719653ba3258",
+      "chunk_file": "chunks/0012.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0012.json",
+      "index": 12,
+      "raw_blake3": "84feabbe619f372ee9d197f56c0944030f0e7ed34f028e5a8cb11e313b35aa50",
+      "raw_size_bytes": 1866
+    },
+    {
+      "chunk_blake3": "40ae09a43ad518afd01582f30b578e6172cd3d1b5afa19e9d8871ce326955df9",
+      "chunk_file": "chunks/0013.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0013.json",
+      "index": 13,
+      "raw_blake3": "5e07ce5e059dd64f573ac08ef5e948709be551ab57c0ab07c625443e30272fde",
+      "raw_size_bytes": 1743
+    },
+    {
+      "chunk_blake3": "771d2a53b51c5f26128046416e5709b34a44d4c5f9141b773559454b4ffae10a",
+      "chunk_file": "chunks/0014.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0014.json",
+      "index": 14,
+      "raw_blake3": "fd87bbe5115fd1f5ee9c0cec7883e46f82a320aec042b379f77955efae84357e",
+      "raw_size_bytes": 1773
+    },
+    {
+      "chunk_blake3": "f844931dcf99f4f278e34c058c99d12476a85b6e413afbcc201b79d614d826b9",
+      "chunk_file": "chunks/0015.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0015.json",
+      "index": 15,
+      "raw_blake3": "bdd379d6b38dea28f9dba4375eabb08cedc0a2a4398c1f066683d625a9ccaf4c",
+      "raw_size_bytes": 1923
+    },
+    {
+      "chunk_blake3": "31046807c513adcc190a1faf3e906aab9b495eda352e8897c763be4a9b0e97ac",
+      "chunk_file": "chunks/0016.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0016.json",
+      "index": 16,
+      "raw_blake3": "f7a24cf1914dd5f2ee9a0d67ba1fd653a2938b8daf93a5155518ed4c93ab8792",
+      "raw_size_bytes": 1908
+    },
+    {
+      "chunk_blake3": "01e4860362babad88b3f7796bb8d22d4742a11769d713096ac45f427221e9711",
+      "chunk_file": "chunks/0017.zst",
+      "compressed_size_bytes": 1023,
+      "envelope_file": "envelopes/0017.json",
+      "index": 17,
+      "raw_blake3": "69adcd1ca76587444caa4b7ac7d19c01b2d17f2bc46b45f2c907b9080e9b4992",
+      "raw_size_bytes": 1790
+    },
+    {
+      "chunk_blake3": "176f626dc0512cf620ee4717b8fe181febbbb2bccd5c912d4a0033ba4516698d",
+      "chunk_file": "chunks/0018.zst",
+      "compressed_size_bytes": 1023,
+      "envelope_file": "envelopes/0018.json",
+      "index": 18,
+      "raw_blake3": "094e6296ab49f805db7d849f47bfe0bfa4d3517a4ae9975e76bde28dd33fc0f8",
+      "raw_size_bytes": 1968
+    },
+    {
+      "chunk_blake3": "743f2e72230a87c0c61f7c3b3948c84ab5515e47db210c1c7bdb9a6558fff278",
+      "chunk_file": "chunks/0019.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0019.json",
+      "index": 19,
+      "raw_blake3": "79227a18fba95a5c1d6de27ddb439ed6272f8748018c3e1940b796be04095de1",
+      "raw_size_bytes": 1972
+    },
+    {
+      "chunk_blake3": "119326c8614f3aadbb057107d26e69860f6b66d5dbfbd9b5c57f10815d56e06b",
+      "chunk_file": "chunks/0020.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0020.json",
+      "index": 20,
+      "raw_blake3": "4eb3856d66107a1d39abbb3bafaa97627a91aa23adb79ac74aadd90336eb7e9b",
+      "raw_size_bytes": 1972
+    },
+    {
+      "chunk_blake3": "0704558e041c3b1f1b16f8268197bbb5fbb7cac71ffeb9955a5a63c588334b06",
+      "chunk_file": "chunks/0021.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0021.json",
+      "index": 21,
+      "raw_blake3": "4da7c588c736b5aa6dc535c4643b733451bb46dedb21c0ff687cf3f1f142d5d6",
+      "raw_size_bytes": 1783
+    },
+    {
+      "chunk_blake3": "f698b0f2238d5d27231de7537f84d5d6f216bacedede97713053aed7b14f51dd",
+      "chunk_file": "chunks/0022.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0022.json",
+      "index": 22,
+      "raw_blake3": "6c9873e1a626071810b10bc69548ef55d7fff0065b66d34ae2c3095f9dbbda00",
+      "raw_size_bytes": 2365
+    },
+    {
+      "chunk_blake3": "63b54c06b38d44fc1374a6ce45e44e5602c103ab900dd944e1ff8ede0f178fdb",
+      "chunk_file": "chunks/0023.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0023.json",
+      "index": 23,
+      "raw_blake3": "0429ba25bad57fae7da649a63271883d1907ff441afda4ecd781996b47459e30",
+      "raw_size_bytes": 1725
+    },
+    {
+      "chunk_blake3": "2f43f55fd4d5f96a9215feea48414050a2e3d0e5481c7ae9f5c3b5400de95184",
+      "chunk_file": "chunks/0024.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0024.json",
+      "index": 24,
+      "raw_blake3": "78e0773f8ddb95555d9ee4e57b0bb1bdd68c1ade2771f335fbef9b086727a3f8",
+      "raw_size_bytes": 1849
+    },
+    {
+      "chunk_blake3": "b24f7edc09d1a1ae4cfa14a1a8cab9c8948f6e7bc66241fa5d2cd4fb81a91817",
+      "chunk_file": "chunks/0025.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0025.json",
+      "index": 25,
+      "raw_blake3": "ed457e783b50ff515688ffdba6242c21bb650da3cb554bae9ce4473ded37105e",
+      "raw_size_bytes": 1750
+    },
+    {
+      "chunk_blake3": "1de7c5d0126db2ea1f39e3951f67f39c63011e1ac322f1da4f69213bc2caac34",
+      "chunk_file": "chunks/0026.zst",
+      "compressed_size_bytes": 1022,
+      "envelope_file": "envelopes/0026.json",
+      "index": 26,
+      "raw_blake3": "3d5bb8bc7148aaac15d7878d9490d1a2e4b18b00a7b0fa5260837b0a1ad9c344",
+      "raw_size_bytes": 1655
+    },
+    {
+      "chunk_blake3": "c936224118a3e020460e33575bf873527adb1e21e6dbec53a9526320268737ba",
+      "chunk_file": "chunks/0027.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0027.json",
+      "index": 27,
+      "raw_blake3": "686a1b36f45efd4dbead06892002f232509814e490958b991404443555ea5596",
+      "raw_size_bytes": 1756
+    },
+    {
+      "chunk_blake3": "6a0df168b7ddf5957333053306b91e834f860bb4a26b97701fd947c9f5068bb9",
+      "chunk_file": "chunks/0028.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0028.json",
+      "index": 28,
+      "raw_blake3": "aae5a78d1a2b3437360f1ac16b47d4e5bdcf824c30abeb0bf66f3ee0fd81e336",
+      "raw_size_bytes": 1794
+    },
+    {
+      "chunk_blake3": "e7d2e4226cbeefbc545a958734b83ece72c6bcca12157f113182296058a5fb8f",
+      "chunk_file": "chunks/0029.zst",
+      "compressed_size_bytes": 1022,
+      "envelope_file": "envelopes/0029.json",
+      "index": 29,
+      "raw_blake3": "8f4a5cfa617606cc8ba3f6e625e708237262c37ca175f0ce18ee458fded587e6",
+      "raw_size_bytes": 1588
+    },
+    {
+      "chunk_blake3": "96726d22bc2587bc43d38d9cfe4a3eca1fc2359770e2434c090ee717336cb49b",
+      "chunk_file": "chunks/0030.zst",
+      "compressed_size_bytes": 1024,
+      "envelope_file": "envelopes/0030.json",
+      "index": 30,
+      "raw_blake3": "1ef9c950ea46e528851ad2d0c5642789515a6ed07664b0ca300d91e14025b8e3",
+      "raw_size_bytes": 1673
+    },
+    {
+      "chunk_blake3": "d7074140fbe8e8be25afce4bbbafe0fa88437b42b55fc3efa0b3e9ec1ff39b6b",
+      "chunk_file": "chunks/0031.zst",
+      "compressed_size_bytes": 204,
+      "envelope_file": "envelopes/0031.json",
+      "index": 31,
+      "raw_blake3": "137433be821a9207419126d16fa238d33a1f76b692bae74d03f9430052600f61",
+      "raw_size_bytes": 248
+    }
+  ],
+  "doc": {
+    "doc_blake3": "c2ed30432df3cac379c16ff73ac7445e589565ee99931711d70305c3e6dc1dc4",
+    "doc_sha256": "bbfbe0331e9c109271ea86302bc7f9558ac810bfca544d4f9c2f2653d92b77ec",
+    "path": "republic-spec.md",
+    "raw_size_bytes": 57203
+  },
+  "encoding": {
+    "compression": "zstd-level-3",
+    "envelope": "mathpost/0.2-archival",
+    "target_compressed_bytes": 1024
+  },
+  "generator": {
+    "generated_at_utc": "2026-05-13T13:38:32.208616+00:00",
+    "origin_cell": "dot1:kin-1-piper:shannon",
+    "tool": "republic-spec/tools/bundle_chunker.py"
+  },
+  "reconstruction_recipe": [
+    "1. Verify each chunk_file matches its chunk_blake3.",
+    "2. zstd-decompress each chunk_file in order (by 'index').",
+    "3. Concatenate raw outputs.",
+    "4. Verify the concatenated bytes' BLAKE3 matches doc.doc_blake3.",
+    "5. Verify the concatenated bytes' SHA-256 matches doc.doc_sha256."
+  ],
+  "schema": "republic-spec/chunks-manifest/v0.1",
+  "totals": {
+    "chunk_count": 32,
+    "compression_ratio": 0.5584,
+    "total_compressed_bytes": 31941
+  }
+}
